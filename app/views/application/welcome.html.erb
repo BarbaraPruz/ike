@@ -1,2 +1,16 @@
 <h1>Welcome to ‛iki</h1>
+<% if flash[:alert] %>
+    <div class="notice"><%= flash[:alert] %></div>
+<% end %>
+<%= form_tag login_path do %>
+    <div class="form-group">
+        <%= label_tag :email %>
+        <%= email_field_tag :email, @user.email %>
+    </div>
+    <div class="form-group">
+        <%= label_tag :password %>
+        <%= password_field_tag :password, @user.password %>
+    </div>
+    <input type=submit value='login'>
+<% end %>
 <%= link_to "Sign Up", users_new_path %>
