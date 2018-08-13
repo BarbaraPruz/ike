@@ -8,5 +8,8 @@ Rails.application.routes.draw do
     post '/users' => 'users#create'   
     get '/users/:id' => 'users#show', as: :user_home
 
+    resources :topics do
+        resources :articles
+    end
  #   get '/about' => 'static#about', as: about
 end

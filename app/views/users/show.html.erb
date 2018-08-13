@@ -1,1 +1,4 @@
-<p>Temporary - user home <%=@user.name%></p>
+<p>Temporary - user home <%=@current_user.name%></p>
+<% if flash[:alert] %>
+    <div class="notice"><%= flash[:alert] %></div>
+<% end %>

@@ -20,7 +20,6 @@ class UsersController < ApplicationController
 
     def show
         redirect_to welcome_path if !logged_in?
-        @user = User.find(params[:id])
     end
 
     private
