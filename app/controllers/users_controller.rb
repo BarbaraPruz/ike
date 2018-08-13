@@ -1,10 +1,12 @@
 class UsersController < ApplicationController
 
     def new
+        redirect_to user_home_path(@current_user.id) if logged_in?
         @user = User.new
     end
 
     def create
+        redirect_to user_home_path(@current_user.id) if logged_in?
         @user = User.new(user_params)
         if @user.valid?
             @user.email = @user.email.downcase
@@ -17,6 +19,7 @@ class UsersController < ApplicationController
     end
 
     def show
+        redirect_to welcome_path if !logged_in?
         @user = User.find(params[:id])
     end
 

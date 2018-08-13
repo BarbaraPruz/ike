@@ -2,6 +2,7 @@ require 'pry'
 class SessionsController < ApplicationController
 
     def create
+        redirect_to user_home_path(@current_user.id) if logged_in?
         @user = User.find_by(email: params[:email].downcase)
         if !@user
             flash[:alert] = "User Email not found."
