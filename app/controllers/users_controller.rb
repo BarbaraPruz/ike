@@ -7,6 +7,7 @@ class UsersController < ApplicationController
     def create
         @user = User.new(user_params)
         if @user.valid?
+            @user.email = @user.email.downcase
             @user.save
             session[:user_id] = @user.id
             redirect_to user_home_path(@user.id)

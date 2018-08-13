@@ -1,5 +1,5 @@
-User.create(:name => "Joe", :email => "Joe@domain.com", :password => "test")
-User.create(:name => "Lily", :email => "Lily@domain.com", :password => "test", :admin => "true")
+User.create(:name => "Joe", :email => "joe@domain.com", :password => "test")
+User.create(:name => "Lily", :email => "lily@domain.com", :password => "test", :admin => "true")
 
 s1 = Topic.create(:name => "Succulents")
 h1 = Topic.create(:name => "Herbs")
