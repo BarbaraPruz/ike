@@ -17,7 +17,8 @@ class SessionsController < ApplicationController
     end
 
     def destroy
-        raise params.inspect
+        session.delete :user_id
+        redirect_to welcome_path
     end
 
 end

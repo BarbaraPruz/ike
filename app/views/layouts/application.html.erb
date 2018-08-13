@@ -20,8 +20,10 @@
     </div>
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li><a class="navbar-brand" rel="nofollow" href=
-          <%= home_url %> >Home</a></li>    
+        <li><a class="navbar-brand" rel="nofollow" href=<%= home_path %> >Home</a></li>  
+        <% if logged_in? %>  
+          <li><a class="navbar-brand" rel="nofollow" data-method="delete" href="/logout">Log Out</a></li>
+        <% end %>
       </ul>
     </div><!--/.nav-collapse -->
   </div>

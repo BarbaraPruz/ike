@@ -2,7 +2,7 @@ Rails.application.routes.draw do
     root 'application#welcome', as: :welcome
 
     post '/login' => 'sessions#create'
-    post '/logout' => 'sessions#destroy'
+    delete '/logout' => 'sessions#destroy'
 
     get '/users/new' => 'users#new'
     post '/users' => 'users#create'   
