@@ -1,41 +1,30 @@
 class UsersController < ApplicationController
     before_action :require_logged_in, except: [:new, :create]
+    before_action :require_admin, only: [:index, :edit, :update]
 
     def index
-        if !is_admin?
-            redirect_to user_path(@current_user.id)
-        else      
-            @users=User.all
-        end
+        @users=User.all
     end
 
-    def edit
-        if !is_admin?
+    def edit   
+        @user=User.find(params[:id])
+        if !@user
+            flash[:alert] ="User not found."
             redirect_to user_path(@current_user.id)
-        else      
-            @user=User.find(params[:id])
-            if !@user
-                flash[:alert] ="User not found."
-                redirect_to user_path(@current_user.id)
-            end
         end
     end
 
     def update
         # to do:  current user can update or admin
-        if !is_admin?
-            redirect_to user_path(@current_user.id)
-        else  
-            @user = User.find(params[:id])
-            if !@user
-                flash[:alert] ="User not found."
-                redirect_to users_path
-            elsif !@user.update(user_params)
-                render :edit
-            else
-                @user.update(:admin=>(params[:user][:admin]=="1" ? true : false))
-                redirect_to users_path
-            end
+        @user = User.find(params[:id])
+        if !@user
+            flash[:alert] ="User not found."
+            redirect_to users_path
+        elsif !@user.update(user_params)
+            render :edit
+        else
+            @user.update(:admin=>(params[:user][:admin]=="1" ? true : false))
+            redirect_to users_path
         end
     end
     
@@ -59,6 +48,22 @@ class UsersController < ApplicationController
 
     def show
         # to do: show logged in user unless admin
+    end
+
+    def destroy
+        if params[:id] == @current_user[:id]
+            flash[:alert] ="Sorry - you cannot delete yourself!"
+            redirect_to users_path
+        else
+            @user = User.find(params[:id])
+            if !@user
+                flash[:alert] ="User not found."
+                redirect_to users_path
+            else
+                @user.destroy
+                redirect_to users_path
+            end
+        end
     end
 
     private

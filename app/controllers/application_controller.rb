@@ -21,6 +21,10 @@ class ApplicationController < ActionController::Base
     redirect_to welcome_path unless logged_in?
   end
 
+  def require_admin
+    redirect_to user_path(@current_user) if !is_admin?
+  end
+
   def current_user
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
   end
