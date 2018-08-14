@@ -1,5 +1,15 @@
 class UsersController < ApplicationController
 
+    def index
+        if !logged_in?
+            redirect_to welcome_path
+        elsif !is_admin?
+            redirect_to user_home_path(@current_user.id)
+        else      
+            @users=User.all
+        end
+    end
+
     def new
         redirect_to user_home_path(@current_user.id) if logged_in?
         @user = User.new

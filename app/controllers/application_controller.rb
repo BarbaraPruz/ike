@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
-  helper_method :logged_in?
+  helper_method :logged_in?, :is_admin?
   before_action :current_user
 
   def welcome
@@ -10,6 +10,10 @@ class ApplicationController < ActionController::Base
   
   def logged_in?
     session[:user_id]
+  end
+
+  def is_admin?
+    current_user && @current_user.admin
   end
 
   private

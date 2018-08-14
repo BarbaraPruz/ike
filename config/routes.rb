@@ -5,7 +5,8 @@ Rails.application.routes.draw do
     delete '/logout' => 'sessions#destroy'
 
     get '/users/new' => 'users#new'
-    post '/users' => 'users#create'   
+    post '/users' => 'users#create' 
+    get '/users' => 'users#index'  
     get '/users/:id' => 'users#show', as: :user_home
 
     resources :topics do
