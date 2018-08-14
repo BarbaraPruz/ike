@@ -1,0 +1,29 @@
+<h1>Edit User</h1>
+<p>Passwords cannot be updated/changed here!</p>
+<%= form_for @user  do |f| %>
+    <% if @user.errors.any? %>
+        <div id="error_explanation">
+        <h2>oops, there seem to be some problems:</h2>
+        <ul>
+            <% @user.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+            <% end %>
+        </ul>
+        </div>
+    <% end %>
+    <div class="form-group <%= 'has-error' if @user.errors.has_key?(:name) %>">
+        <%= f.label :name %>
+        <%= f.text_field :name %>
+    </div>
+
+    <div class="form-group <%= 'has-error' if @user.errors.has_key?(:email) %>">
+        <%= f.label :email %>
+        <%= f.email_field :email %>
+    </div>
+
+    <div class="form-group">
+        <%= f.label :admin %>
+        <%= f.check_box :admin %>
+    </div>
+    <%= f.submit "Update" %>
+<% end %>

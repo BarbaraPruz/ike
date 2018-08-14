@@ -4,7 +4,12 @@ Rails.application.routes.draw do
     post '/login' => 'sessions#create'
     delete '/logout' => 'sessions#destroy'
 
-    resources :users
+    get '/users/new' => 'users#new'
+    post '/users' => 'users#create' 
+    get '/users' => 'users#index' 
+    get '/users/:id/edit' => 'users#edit'
+    patch '/users/:id' => 'users#update'
+    get '/users/:id' => 'users#show', as: :user_home
     
     resources :topics do
         resources :articles

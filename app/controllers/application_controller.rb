@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   before_action :current_user
 
   def welcome
-    redirect_to user_home_path(@current_user.id) if logged_in?
+    redirect_to user_path(@current_user.id) if logged_in?
     @user = User.new
   end
   

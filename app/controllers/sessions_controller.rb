@@ -2,7 +2,7 @@ require 'pry'
 class SessionsController < ApplicationController
 
     def create
-        redirect_to user_home_path(@current_user.id) if logged_in?
+        redirect_to user_path(@current_user.id) if logged_in?
         @user = User.find_by(email: params[:email].downcase)
         if !@user
             flash[:alert] = "User Email not found."
@@ -10,7 +10,7 @@ class SessionsController < ApplicationController
             render :welcome
         elsif @user.authenticate(params[:password])
             session[:user_id] = @user.id
-            redirect_to user_home_path(@user)
+            redirect_to user_path(@user)
         else
             flash[:alert] ="Password incorrect."
             render :welcome
