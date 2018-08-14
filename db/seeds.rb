@@ -1,5 +1,5 @@
-User.create(:name => "Joe", :email => "joe@domain.com", :password => "test")
-User.create(:name => "Lily", :email => "lily@domain.com", :password => "test", :admin => "true")
+u1 = User.create(:name => "Joe", :email => "joe@domain.com", :password => "test")
+u2 = User.create(:name => "Lily", :email => "lily@domain.com", :password => "test", :admin => "true")
 
 s1 = Topic.create(:name => "Succulents")
 h1 = Topic.create(:name => "Herbs")
@@ -15,4 +15,6 @@ a3 = Article.create(:title => "Herb Types",
 a1.update(:topic_id => s1.id)
 a2.update(:topic_id => s1.id)
 a3.update(:topic_id => h1.id)
+
+b1 = Bookmark.create(:user_id => u1.id, :article_id => a2.id, :name =>"Low Water Ideas")
 
