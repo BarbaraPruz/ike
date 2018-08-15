@@ -26,9 +26,14 @@ class ArticlesController < ApplicationController
     end
 
     def create
-        @article = Article.new(article_params)
-        if @article.valid?
-            @article.save
+        if params[:article][:topic].empty?
+            topic = Topic.find_by(params[:article][:topic_id])
+        else  
+            topic = Topic.create(:name => params[:article][:topic])
+            params[:article][:topic_id] = topic.id if topic
+        end
+        @article = Article.create(article_params) if topic
+        if topic && @article 
             redirect_to topics_path
         else
             render :new
