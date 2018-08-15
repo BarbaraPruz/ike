@@ -1,6 +1,6 @@
 <h2><%= @topic.name %> - <%= @article.title %></h2>
 <h5>Helpful Count: <%=@article.helpful_count%></h5>
-<p><%= @article.content %></p>
+<p><%= sanitize @article.content %></p>
 <%= button_to "Helpful!", { :controller => 'articles',  :action=>"like", 
             :id => @article.id, :topic_id => @topic.id} , :method => :post %>
 <%= button_to "Create Bookmark", { :controller => 'bookmarks',  :action=>"create", 
