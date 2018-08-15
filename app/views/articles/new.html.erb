@@ -1,0 +1,28 @@
+<%= form_for @article do |f|%>
+    <% if @article.errors.any? %>
+        <div id="error_explanation">
+        <h2>oops, there seem to be some problems:</h2>
+        <ul>
+            <% @article.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+            <% end %>
+        </ul>
+        </div>
+    <% end %>
+    <div class="form-group <%= 'has-error' if @article.errors.has_key?(:title) %>">
+        <%= f.label :title %>
+        <%= f.text_field :title %>
+    </div>
+
+    <div class="form-group <%= 'has-error' if @article.errors.has_key?(:topic_id) %>">
+        <%= f.label :topic %>
+        <%= f.select("topic_id", @topics.collect {|t| [ t.name, t.id ] })%>
+    </div>    
+    
+    <div class="form-group <%= 'has-error' if @article.errors.has_key?(:content) %>">
+        <%= f.label :content %>
+        <%= f.text_area :content %>
+    </div>
+
+    <%= f.submit 'Create' %>
+<% end %>

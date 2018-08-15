@@ -1,5 +1,7 @@
+require 'pry'
 class ArticlesController < ApplicationController
     before_action :require_logged_in
+    before_action :require_admin, only: [:new, :create]
 
     def show
         @article = Article.find(params[:id])
@@ -18,4 +20,24 @@ class ArticlesController < ApplicationController
         redirect_to topics_path
     end
 
+    def new
+        @article = Article.new()
+        @topics = Topic.all
+    end
+
+    def create
+        @article = Article.new(article_params)
+        if @article.valid?
+            @article.save
+            redirect_to topics_path
+        else
+            render :new
+        end        
+    end
+
+    private
+
+    def article_params
+        params.require(:article).permit(:title, :content, :topic_id)
+    end
 end

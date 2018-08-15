@@ -4,5 +4,6 @@ class Article  < ActiveRecord::Base
     has_many :users, through: :bookmarks
     
     validates :title, presence: true
+    validates :topic, presence: true
     
 end
