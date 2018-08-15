@@ -10,10 +10,11 @@ Rails.application.routes.draw do
         resources :articles, except: [:new, :create]
     end
     post '/topic/:id/article/:id/like' => 'articles#like'
-    get '/articles/new' => 'articles#new'
-    post 'articles' => 'articles#create'
     
     post '/bookmarks/create/:article_id' => 'bookmarks#create'
 
+    scope '/admin' do
+        resources :articles, only: [:new, :create]
+    end
     get '/about' => 'static#about'
 end
