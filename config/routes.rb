@@ -10,5 +10,8 @@ Rails.application.routes.draw do
         resources :articles
     end
     post '/topic/:id/article/:id/like' => 'articles#like'
- #   get '/about' => 'static#about', as: about
+
+    post '/bookmarks/create/:article_id' => 'bookmarks#create'
+
+    get '/about' => 'static#about'
 end

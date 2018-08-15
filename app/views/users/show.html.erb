@@ -5,7 +5,7 @@
 <h2>Bookmarks</h2>
 <ul>
 <% @current_user.bookmarks.each do |bookmark| %>
-    <li><%=bookmark.name%></li>
+    <li><%= link_to bookmark.article_title, topic_article_path(bookmark.topic_id, bookmark.article_id) %></li>
 <% end %>
 </ul>
 

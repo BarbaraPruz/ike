@@ -36,6 +36,9 @@
                   </ul>
                 </li>             
               <% end %>
+            <% end %>
+            <li><a class="nav-link" href="/about">About</a></li>  
+            <% if logged_in? %>
               <li><a class="nav-link" data-method="delete" href="/logout">Log Out</a></li>              
             <% end %>
           </ul>
