@@ -1,7 +1,7 @@
 require 'pry'
 class ArticlesController < ApplicationController
     before_action :require_logged_in
-    before_action :require_admin, only: [:new, :create]
+    before_action :require_admin, only: [:new, :create, :destroy]
 
     def show
         @article = Article.find(params[:id])
@@ -38,6 +38,15 @@ class ArticlesController < ApplicationController
         else
             render :new
         end        
+    end
+
+    def destroy
+        @article = Article.find(params[:id])
+        if !@article
+            redirect_to topics_path, flash[:alert] ="Article not found. Id #{params[:id]}"
+        end
+        @article.destroy
+        redirect_to topics_path
     end
 
     private
