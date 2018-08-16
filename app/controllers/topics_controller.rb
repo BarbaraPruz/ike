@@ -14,7 +14,6 @@ class TopicsController < ApplicationController
     def destroy
         topic = Topic.find_by(:id => params[:id])
         article = Article.find_by(:topic_id => params[:id]) if topic
-        binding.pry
         if topic && !article
             topic.destroy
         else
