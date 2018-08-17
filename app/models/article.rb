@@ -13,4 +13,8 @@ class Article  < ActiveRecord::Base
     end
     def new_topic
     end
+
+    def self.get_latest (number_articles)
+        self.last(number_articles)
+    end
 end

@@ -1,30 +1,39 @@
 class UsersController < ApplicationController
     before_action :require_logged_in, except: [:new, :create]
-    before_action :require_admin, only: [:index, :edit, :update]
+    before_action :require_admin, only: [:index]
 
     def index
         @users=User.all
     end
 
-    def edit   
-        @user=User.find(params[:id])
-        if !@user
-            flash[:alert] ="User not found."
+    def edit
+        if is_admin? || current_user.id.to_s == params[:id]  
+            @user=User.find(params[:id])
+            if !@user
+                flash[:alert] ="User not found."
+                redirect_to user_update_return_path
+            end 
+        else
+            flash[:alert] ="Operation not allowed"
             redirect_to user_path(@current_user.id)
         end
     end
 
     def update
-        # to do:  current user can update or admin
-        @user = User.find(params[:id])
-        if !@user
-            flash[:alert] ="User not found."
-            redirect_to users_path
-        elsif !@user.update(user_params)
-            render :edit
+        if is_admin? || current_user.id.to_s == params[:id] 
+            @user = User.find(params[:id])
+            if !@user
+                flash[:alert] ="User not found."
+                redirect_to user_update_return_path
+            elsif !@user.update(user_params)
+                render :edit
+            else
+                @user.update(:admin=>(params[:user][:admin]=="1" ? true : false))
+                redirect_to user_update_return_path
+            end  
         else
-            @user.update(:admin=>(params[:user][:admin]=="1" ? true : false))
-            redirect_to users_path
+            flash[:alert] ="Operation not allowed"
+            redirect_to user_path(@current_user.id)
         end
     end
     
@@ -47,6 +56,7 @@ class UsersController < ApplicationController
     end
 
     def show
+        @latest_articles = Article.get_latest(5)
         # to do: show logged in user unless admin
     end
 
@@ -70,5 +80,9 @@ class UsersController < ApplicationController
 
     def user_params
       params.require(:user).permit(:name, :email, :password, :password_confirmation)
+    end
+
+    def user_update_return_path
+        is_admin? ? users_path : user_path(current_user)
     end
 end

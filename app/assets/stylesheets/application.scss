@@ -36,10 +36,14 @@ body {
   padding: 2em;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 2em;
   width: 40%;
   border: 1px solid #FFF6A9; // to look thinner than #FFED53;
   border-radius: 10px;
+}
+.notice {
+  margin:2em;
+  color: red;
+  font-style: bold;
 }
 h1 {
   color: #0F4C9B;
