@@ -40,6 +40,15 @@ class ArticlesController < ApplicationController
         end        
     end
 
+    def edit
+        @article = Article.find(params[:id])
+        @topic = Topic.find(params[:topic_id])
+        if !@article
+            redirect_to topics_path, flash[:alert] ="Article not found. Id #{params[:id]}"
+        end
+        @topics = Topic.all
+    end
+
     def destroy
         @article = Article.find(params[:id])
         if !@article

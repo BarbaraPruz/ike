@@ -1,0 +1,30 @@
+<%= form_tag path_for_article do %>
+    <% if article.errors.any? %>
+        <div id="error_explanation">
+        <h2>oops, there seem to be some problems:</h2>
+        <ul>
+            <% article.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+            <% end %>
+        </ul>
+        </div>
+    <% end %>
+    <div class="form-group <%= 'has-error' if article.errors.has_key?(:title) %>">
+        <%= label_tag :title %>
+        <%= text_field_tag :'article[title]', article.title%>
+    </div>
+
+    <div class="form-group <%= 'has-error' if article.errors.has_key?(:topic_id) %>">
+        <%= label_tag :topic %>
+        <%= text_field_tag :'article[topic]', nil, placeholder: "New Topic" %>
+        <%= select_tag "topic_id", get_topics, {include_blank: 'select topic'} %>
+    </div>    
+    
+    <div class="form-group <%= 'has-error' if article.errors.has_key?(:content) %>">
+        <%= label_tag :content %>
+        <%= text_area_tag :'article[content]', article.content, :class => "tinymce", :rows => 40, :cols => 120 %>
+        <%= tinymce %>
+    </div>
+
+    <%= submit_tag 'Submit' %>
+<% end %>

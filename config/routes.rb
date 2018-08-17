@@ -6,18 +6,17 @@ Rails.application.routes.draw do
 
     resources :users
     
+    # ? No plans for routes topics/:id, topics/new, topics/:create
     resources :topics do
         resources :articles, except: [:new, :create]
     end
-    post '/topic/:id/article/:id/like' => 'articles#like'
-    
-    post '/bookmarks/create/:article_id' => 'bookmarks#create'
+    post '/topics/:id/articles/:id/like' => 'articles#like'
 
-    scope '/admin' do
-        resources :articles, only: [:new, :create]
-        resources :topics, only: [:destroy]
-    end
-    get '/admin/topics' => 'topics#admin_index', as: :admin_topics_index
+    resources :articles, only: [:new, :create]
+
+    # alternative route is topic/:id/article/:id/bookmark/xxxx
+    post '/bookmarks/create/:article_id' => 'bookmarks#create'
+    delete '/bookmark/:id' => 'bookmarks#destroy'
 
     get '/about' => 'static#about'
 end

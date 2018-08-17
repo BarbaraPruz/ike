@@ -8,4 +8,14 @@ class BookmarksController < ApplicationController
         redirect_to user_path(@current_user)
     end
 
+    def destroy
+        bookmark = Bookmark.find_by(:id => params[:id])
+        if bookmark && bookmark.user_id==current_user.id
+            bookmark.destroy
+        else
+            flash[:alert] ="Bookmark not found for you!"
+        end
+        redirect_to user_path(@current_user)
+    end
+
 end

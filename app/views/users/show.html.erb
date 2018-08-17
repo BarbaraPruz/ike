@@ -5,7 +5,12 @@
 <h2>Bookmarks</h2>
 <ul>
 <% @current_user.bookmarks.each do |bookmark| %>
-    <li><%= link_to bookmark.article_title, topic_article_path(bookmark.topic_id, bookmark.article_id) %></li>
+    <li>
+        <%= link_to bookmark.article_title, 
+            topic_article_path(bookmark.topic_id, bookmark.article_id) %>
+        <%= link_to "Delete Bookmark", { :controller => 'bookmarks',  :action=>"destroy", 
+            :id => bookmark.id} , :method => :delete %>
+    </li>
 <% end %>
 </ul>
 

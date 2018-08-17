@@ -6,5 +6,9 @@ module ApplicationHelper
         else
           return welcome_path
         end
-    end  
+    end 
+    
+    def get_topics
+      "<option>Succulents</option><option>Weeds</option>".html_safe
+    end
 end

@@ -4,11 +4,14 @@
     <li><%= topic.name %></li>
     <ul>
         <% topic.articles.each do |article| %>
-            <li><%= link_to article.title, topic_article_path(topic,article) %></li> 
+            <li><%= link_to article.title, topic_article_path(topic,article) %>
             <% if is_admin? %>
-                <%= button_to "Delete", { :controller => 'articles',  :action=>"destroy", 
+                <%= link_to "Delete", { :controller => 'articles',  :action=>"destroy", 
                 :id => article.id, :topic_id => topic.id} , :method => :delete %>
-            <% end %>           
+                <%= link_to "Edit", { :controller => 'articles',  :action=>"edit", 
+                :id => article.id, :topic_id => topic.id} %>
+            <% end %>   
+            </li>         
         <% end %>
     </ul>
 <% end %>

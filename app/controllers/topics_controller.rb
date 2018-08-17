@@ -7,9 +7,9 @@ class TopicsController < ApplicationController
         @topics = Topic.all
     end
 
-    def admin_index
-        @topics = Topic.all
-    end
+    # def admin_index
+    #     @topics = Topic.all
+    # end
 
     def destroy
         topic = Topic.find_by(:id => params[:id])
@@ -19,6 +19,6 @@ class TopicsController < ApplicationController
         else
             flash[:alert] ="Error. Verify Topic does not have any Articles."
         end
-        redirect_to :admin_topics_index
+        redirect_to :topics_index
     end
 end
