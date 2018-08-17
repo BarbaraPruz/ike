@@ -1,7 +1,14 @@
 <h1>Articles by Topic</h1>
 <ul>
 <% @topics.each do |topic| %>
-    <li><%= topic.name %></li>
+    <li>
+        <%= topic.name %>
+        <% if is_admin? %>
+            <%= link_to "Edit", { :controller => 'topics',  :action=>"edit", :id => topic.id} %>
+            <%= link_to "Delete", { :controller => 'topics',  :action=>"destroy", 
+            :id => topic.id} , :method => :delete if topic.articles.count == 0 %>
+        <% end %> 
+    </li>
     <ul>
         <% topic.articles.each do |article| %>
             <li><%= link_to article.title, topic_article_path(topic,article) %>
