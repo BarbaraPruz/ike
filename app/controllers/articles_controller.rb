@@ -1,7 +1,7 @@
 require 'pry'
 class ArticlesController < ApplicationController
     before_action :require_logged_in
-    before_action :require_admin, only: [:new, :create, :destroy]
+    before_action :require_admin, only: [:new, :create, :destroy, :edit, :update]
 
     def show
         @article = Article.find(params[:id])
@@ -26,14 +26,8 @@ class ArticlesController < ApplicationController
     end
 
     def create
-        if params[:article][:topic].empty?
-            topic = Topic.find_by(params[:article][:topic_id])
-        else  
-            topic = Topic.create(:name => params[:article][:topic])
-            params[:article][:topic_id] = topic.id if topic
-        end
-        @article = Article.create(article_params) if topic
-        if topic && @article 
+        @article = Article.create(article_params) 
+        if @article
             redirect_to topics_path
         else
             render :new
@@ -49,8 +43,14 @@ class ArticlesController < ApplicationController
         @topics = Topic.all
     end
     def update
-        raise params.inspect
+        @article = Article.find(params[:id])
+        if !@article   
+            redirect_to topics_path, flash[:alert] ="Article not found. Id #{params[:id]}"
+        end
+        @article.update(article_params)
+        redirect_to topics_path    
     end
+
     def destroy
         @article = Article.find(params[:id])
         if !@article
@@ -63,6 +63,6 @@ class ArticlesController < ApplicationController
     private
 
     def article_params
-        params.require(:article).permit(:title, :content, :topic_id)
+        params.require(:article).permit(:title, :content, :topic_id, :new_topic)
     end
 end
