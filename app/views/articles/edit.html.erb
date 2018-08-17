@@ -1,4 +1,4 @@
 <h1>Edit Article</h1>
 <%= render partial: "form", 
-    locals: {path_for_article: topic_article_path, method: :patch, article: @article, topics: @topics}  
+    locals: {form_action: "update", article: @article, topics: @topics}  
 %>

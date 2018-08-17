@@ -48,7 +48,9 @@ class ArticlesController < ApplicationController
         end
         @topics = Topic.all
     end
-
+    def update
+        raise params.inspect
+    end
     def destroy
         @article = Article.find(params[:id])
         if !@article

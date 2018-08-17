@@ -8,7 +8,4 @@ module ApplicationHelper
         end
     end 
     
-    def get_topics
-      "<option>Succulents</option><option>Weeds</option>".html_safe
-    end
 end
