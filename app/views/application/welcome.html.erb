@@ -1,18 +1,35 @@
+<h1 class="text-center">Welcome to ‛iki</h1>
 <div class="form-area">
-    <h1 class="text-center">Welcome to ‛iki</h1>
     <% if flash[:alert] %>
         <div class="notice"><%= flash[:alert] %></div>
     <% end %>
     <%= form_tag login_path do %>
-        <div class="form-group">
-            <%= label_tag :email %>
-            <%= email_field_tag :email, @user.email %>
+        <div class="row">
+            <div class="form-group">
+                <div class="col-sm-3">
+                    <%= label_tag :email %>
+                </div>
+                <div class="col-sm-9">
+                    <%= email_field_tag :email, @user.email %>
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-            <%= label_tag :password %>
-            <%= password_field_tag :password, @user.password %>
+        <div class="row">
+            <div class="form-group">
+                <div class="col-sm-3">
+                    <%= label_tag :password %>
+                </div>
+                <div class="col-sm-9">
+                    <%= password_field_tag :password, @user.password %>
+                </div>
+            </div>
         </div>
-        <input type=submit value='login'>
+        <div class="row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4">
+                <input type=submit value='Login' class="btn btn-primary btn-block">
+            </div>
+        </div>
     <% end %>
-    <%= link_to "Sign Up", new_user_path %>
+    <p>Not registered? <%= link_to "Sign Up", new_user_path %></p>
 </div>

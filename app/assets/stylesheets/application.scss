@@ -30,26 +30,27 @@ body {
 }
 .navbar {
   border: 1px solid #FFED53;
+  background: #ffffff;
 }
 .form-area {
-  background:#f8f8f8;;
+  //background:#f8f8f8;;
   padding: 2em;
   margin-left: auto;
   margin-right: auto;
   width: 40%;
-  border: 1px solid #FFF6A9; // to look thinner than #FFED53;
+  border: 1px ridge #FFF6A9; // to look thinner than #FFED53;
   border-radius: 10px;
 }
 .notice {
-  margin:2em;
+  margin:1em;
   color: red;
   font-style: bold;
 }
 h1 {
-  color: #0F4C9B;
+  color: #2C608F; //#135CB5; //#0F4C9B;
 }
 .form-area label {
-  color: #0F4C9B;
+  color: #2C608F; //#135CB5;
 }
 // .theme-dropdown .dropdown-menu {
 //   position: static;
