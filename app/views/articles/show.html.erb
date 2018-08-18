@@ -1,4 +1,10 @@
 <h2><%= @topic.name %> - <%= @article.title %></h2>
+<% if is_admin? %>
+<%= link_to "Delete", { :controller => 'articles',  :action=>"destroy", 
+:id => @article.id, :topic_id => @topic.id} , :method => :delete %>
+<%= link_to "Edit", { :controller => 'articles',  :action=>"edit", 
+:id => @article.id, :topic_id => @topic.id} %>
+<% end %>  
 <h5>Helpful Count: <%=@article.helpful_count%></h5>
 <p><%= sanitize @article.content %></p>
 <%= button_to "Helpful!", { :controller => 'articles',  :action=>"like", 

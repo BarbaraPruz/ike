@@ -1,0 +1,28 @@
+<h1>Articles</h1>
+<%= form_tag articles_sort_path, method: "post" do %>
+    <h5>Sort Field</h5>
+
+    <%= select_tag "sort", options_for_select(@sort.collect{ |u| [u[:display], u[:value]] }) %>
+
+    <%= submit_tag "Sort" %>
+<% end %>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Topic</th>
+            <th scope="col">Title</th>
+            <th scope="col">Likes</th>
+            <th scope="col">Date</th>
+        </tr>
+    </thead>
+    <tbody>
+    <% @articles.each do | article | %>
+        <tr>
+            <th scope="row"><%= article.topic.name %></th>
+            <td><%= link_to article.title, topic_article_path(article.topic_id,article) %></td>
+            <td><%= article.helpful_count %></td>
+            <td><%= format_time(article.created_at) %></td>
+        </tr>
+    <% end %>
+  </tbody>
+</table>
