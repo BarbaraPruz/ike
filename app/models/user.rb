@@ -8,14 +8,7 @@ class User < ActiveRecord::Base
     validates :email, presence: true, uniqueness: true
     validates :password, presence: true, on: :create
 
-    def self.create_with_omniauth(auth)
-        binding.pry
-        create! do |user|
-          user.provider = auth["provider"]
-          user.uid = auth["uid"]
-          user.name = auth["info"]["name"]
-        end
-    end
+    before_save { |user| user.email = user.email.downcase }
 
     def self.find_or_create_by_omniauth(auth_hash)
         email = auth_hash[:info][:email]
