@@ -1,25 +1,33 @@
-<p>Hi <%=@current_user.name%></p>
 <% if flash[:alert] %>
     <div class="notice"><%= flash[:alert] %></div>
 <% end %>
+<h2>Hi <%=@current_user.name%></h2>
 <%= link_to "Edit Profile", edit_user_path(@current_user.id) %>
-<h2>Your Bookmarks</h2>
-<ul>
-<% @current_user.bookmarks.each do |bookmark| %>
-    <li>
-        <%= link_to bookmark.article_title, 
-            topic_article_path(bookmark.topic_id, bookmark.article_id) %>
-        <%= link_to "Delete Bookmark", { :controller => 'bookmarks',  :action=>"destroy", 
-            :id => bookmark.id} , :method => :delete %>
-    </li>
-<% end %>
-</ul>
-<h2>Latest Articles</h2>
-<ul>
-<% @latest_articles.each do |article| %>
-    <li>
-        <%= link_to "#{article.title} - #{format_time(article.created_at)}", topic_article_path(article.topic_id,article) %>
-    </li>
-<% end %>
-
+<div class="row">
+    <div class="col-sm-1"></div>
+    <div class="col-sm-4 section-area">    
+        <h2>Latest Articles</h2>
+        <ul class="list-unstyled">
+        <% @latest_articles.each do |article| %>
+            <li>
+                <%=format_time(article.created_at)%> - <%= link_to "#{article.title}", topic_article_path(article.topic_id,article) %>
+            </li>
+        <% end %>
+        </ul>
+    </div>
+    <div class="col-sm-1"></div>
+    <div class="col-sm-4 section-area">
+    <h2>Your Bookmarks</h2>
+        <ul class="list-unstyled">
+        <% @current_user.bookmarks.each do |bookmark| %>
+            <li>
+                <%= link_to bookmark.article_title, 
+                    topic_article_path(bookmark.topic_id, bookmark.article_id) %>
+                <%= link_to "", { :controller => 'bookmarks',  :action=>"destroy", 
+                    :id => bookmark.id} , :method => :delete, class: "btn btn-outline-primary fas fa-trash-alt"%>
+            </li>
+        <% end %>
+        </ul>
+    </div>
+</div>
 

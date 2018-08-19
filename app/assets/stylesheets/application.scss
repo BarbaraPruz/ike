@@ -18,7 +18,7 @@
 @import "bootstrap";
 
 body {
-  padding-top: 70px;
+  padding-top: 90px;
   padding-bottom: 30px;
 } 
 
@@ -33,19 +33,20 @@ body {
   background: #ffffff;
 }
 .form-area {
-  //background:#f8f8f8;;
-  padding: 2em;
   margin-left: auto;
   margin-right: auto;
   width: 40%;
-  border: 1px ridge #FFF6A9; // to look thinner than #FFED53;
-  border-radius: 10px;
+}
+.section-area {
+    //background:#f8f8f8;;
+    padding: 2em;
+    border: 1px ridge #FFF6A9; // to look thinner than #FFED53;
 }
 .notice {
-  margin:1em;
   color: red;
   font-style: bold;
 }
+
 h1 {
   color: #2C608F; //#135CB5; //#0F4C9B;
 }
