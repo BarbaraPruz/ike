@@ -4,7 +4,7 @@ class UsersController < ApplicationController
     before_action :require_admin_or_same_user, only: [:edit, :update]
 
     def index
-        @users=User.all
+        @users=User.all.sort { |a,b| a.name <=> b.name }  
     end
 
     def edit
