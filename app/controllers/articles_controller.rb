@@ -15,21 +15,13 @@ class ArticlesController < ApplicationController
     end
 
     def show
-        @article = Article.find(params[:id])
-        @topic = Topic.find(params[:topic_id])
-        if !@article || !@topic
-            redirect_to user_home_path(@current_user.id), flash[:alert] ="Article/Topic not found. Id #{params[:id]}"
-        end
+        get_article_and_topic_instance_vars
     end
 
     def like
-        @article = Article.find(params[:id])
-        if !@article
-            redirect_to user_home_path(@current_user.id), flash[:alert] ="Article not found. Id #{params[:id]}"
-        end
+        get_article_and_topic_instance_vars
         @article.update(:helpful_count => @article.helpful_count+1) 
-        @topic = @article.topic
-        render "show"
+        render :show
     end
 
     def new
@@ -40,37 +32,27 @@ class ArticlesController < ApplicationController
     def create
         @article = Article.create(article_params) 
         if @article
-            redirect_to topics_path
+            redirect_to topic_article_path(@article.topic, @article)
         else
             render :new
         end        
     end
 
     def edit
-        @article = Article.find(params[:id])
-        @topic = Topic.find(params[:topic_id])
-        if !@article
-            redirect_to topics_path, flash[:alert] ="Article not found. Id #{params[:id]}"
-        end
+        get_article_and_topic_instance_vars
         @topics = Topic.all
     end
     def update
-        @article = Article.find(params[:id])
-        if !@article   
-            redirect_to topics_path, flash[:alert] ="Article not found. Id #{params[:id]}"
-        end
+        get_article_and_topic_instance_vars
         @article.update(article_params)
-        redirect_to topics_path    
+        redirect_to topic_article_path(@topic, @article) 
     end
 
     def destroy
-        @article = Article.find(params[:id])
-        if !@article
-            redirect_to topics_path, flash[:alert] ="Article not found. Id #{params[:id]}"
-        end
+        get_article_and_topic_instance_vars
         Bookmark.clean(@article.id)
         @article.destroy
-        redirect_to topics_path
+        redirect_to :index
     end
 
     private
@@ -86,4 +68,13 @@ class ArticlesController < ApplicationController
                 { value: "created_at",display: "Date"}]
         columns   
     end
+
+    def get_article_and_topic_instance_vars
+        @article = Article.find(params[:id])
+        @topic = Topic.find(params[:topic_id])
+        if !@article || !@topic
+            redirect_to user_home_path(@current_user.id), flash[:alert] ="Article/Topic not found. Article Id #{params[:id]}"
+        end
+    end
+
 end

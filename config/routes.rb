@@ -12,7 +12,7 @@ Rails.application.routes.draw do
     resources :topics do
         resources :articles, except: [:new, :create, :index]
     end
-    post '/topics/:id/articles/:id/like' => 'articles#like'
+    post '/topics/:topic_id/articles/:id/like' => 'articles#like'
 
 
     resources :articles, only: [:new, :create, :index]
