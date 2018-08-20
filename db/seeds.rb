@@ -16,5 +16,5 @@ a1.update(:topic_id => s1.id)
 a2.update(:topic_id => s1.id)
 a3.update(:topic_id => h1.id)
 
-b1 = Bookmark.create(:user_id => u1.id, :article_id => a2.id)
+b1 = Bookmark.create(:user_id => u1.id, :article_id => a2.id, :title => "Take Care of Cacti")
 

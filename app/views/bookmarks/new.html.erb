@@ -1,24 +1,11 @@
-<h1>New BookMark for <%=@current_user.name%>
-<%= form_for @bookmark do |f|%>
+<h1>New BookMark for <%=@article.title%></h1>
+<%= form_for ([@article,@bookmark]) do |f|%>
+    <%= f.hidden_field :article_id %>
+    <%= f.hidden_field :user_id %>
     <div class="form-group">
-        <%= f.label :@article. %>
-        <%= f.text_field :name %>
+        <%= f.label :title %>
+        <%= f.text_field :title %>
     </div>
 
-    <div class="form-group <%= 'has-error' if @user.errors.has_key?(:email) %>">
-        <%= f.label :email %>
-        <%= f.email_field :email %>
-    </div>
-
-    <div class="form-group <%= 'has-error' if @user.errors.has_key?(:password) %>">
-        <%= f.label :password %>
-        <%= f.password_field :password %>
-    </div>
-
-    <div class="form-group <%= 'has-error' if @user.errors.has_key?(:password_confirmation) %>">
-        <%= f.label :password_confirmation %>
-        <%= f.password_field :password_confirmation %>
-    </div>
-
-    <%= f.submit 'Sign Up' %>
+    <%= f.submit 'Create' %>
 <% end %>

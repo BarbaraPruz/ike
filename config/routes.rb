@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+
+    # Users and sessions 
     root 'application#welcome', as: :welcome
 
     get '/login' => 'application#welcome'
@@ -8,19 +10,24 @@ Rails.application.routes.draw do
 
     resources :users
     
+    # topics and articles
     # ? No plans for routes topics/:id, topics/new, topics/:create
     resources :topics do
-        resources :articles, except: [:new, :create, :index]
+        resources :articles, except: [:new, :create, :index] 
     end
     post '/topics/:topic_id/articles/:id/like' => 'articles#like'
 
-
-    resources :articles, only: [:new, :create, :index]
+    # article specific routes and bookmarks 
+    resources :articles, only: [:new, :create, :index] do 
+        resources :bookmarks, only: [:new, :create, :destroy]
+    end
     post '/articles/sort' => 'articles#sort', as: :articles_sort
 
-    # alternative route is topic/:id/article/:id/bookmark/xxxx
-    post '/bookmarks/create/:article_id' => 'bookmarks#create'
-    delete '/bookmark/:id' => 'bookmarks#destroy'
-
+    # articles and bookmarks
+    # get '/articles/:article_id/bookmarks/new' => 'bookmarks#new'
+    # post '/articles/:article_id/bookmarks/create' => 'bookmarks#create'
+    # delete '/articles/:article_id/bookmark/:id' => 'bookmarks#destroy'
+ 
+    # miscellaneous
     get '/about' => 'static#about'
 end

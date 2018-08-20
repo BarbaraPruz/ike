@@ -13,9 +13,9 @@
         </div>
     </div>
     <div class="col-sm-2">
-        <%= button_to "Create Bookmark", 
-            { :controller => 'bookmarks',  :action=>"create", :article_id => @article.id}, 
-            :method => :post,  :class => "btn btn-primary btn-sm" %>
+        <%= link_to "Create Bookmark", 
+            { :controller => 'bookmarks',  :action=>"new", :article_id => @article.id}, 
+              :class => "btn btn-primary btn-sm" %>
     </div>
 </div>
 <% if is_admin? %>

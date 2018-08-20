@@ -1,5 +1,9 @@
 class Bookmark  < ActiveRecord::Base
-    belongs_to :article
+    validates :title, presence: true
+    validates :article_id, presence: true
+    validates :user_id, presence: true
+
+    belongs_to :article  # , dependent: :destroy
     belongs_to :user
 
     def article_title

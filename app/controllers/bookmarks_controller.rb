@@ -1,10 +1,17 @@
 class BookmarksController < ApplicationController
     before_action :require_logged_in
 
-    def create
+    def new
         @article = Article.find_by(:id => params[:article_id])
         # To Do - verify article 
-        bookmark = Bookmark.create(:article_id => @article.id, :user_id => @current_user.id)
+        @bookmark = Bookmark.new(:article_id => @article.id, :user_id => @current_user.id,
+            :title => @article.title)
+    end
+
+    def create
+        @article = Article.find_by(:id => params[:article_id])
+        # To Do - verify article  and verify user is current user
+        bookmark = Bookmark.create(bookmark_params)
         # To Do - handle errors?
         redirect_to topic_article_path(@article.topic, @article)
     end
@@ -19,4 +26,8 @@ class BookmarksController < ApplicationController
         redirect_to user_path(@current_user)
     end
 
+    private
+    def bookmark_params
+        params.require(:bookmark).permit(:user_id, :article_id, :title)
+    end
 end

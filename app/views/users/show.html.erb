@@ -21,10 +21,11 @@
         <ul class="list-unstyled">
         <% @current_user.bookmarks.each do |bookmark| %>
             <li>
-                <%= link_to bookmark.article_title, 
+                <%= link_to bookmark.title, 
                     topic_article_path(bookmark.topic_id, bookmark.article_id) %>
-                <%= link_to "", { :controller => 'bookmarks',  :action=>"destroy", 
-                    :id => bookmark.id} , :method => :delete, class: "btn btn-outline-primary fas fa-trash-alt"%>
+                <%= link_to "", 
+                    { :controller => 'bookmarks',  :action=>"destroy", :id => bookmark.id, article_id:bookmark.article_id }, 
+                    :method => :delete, class: "btn btn-outline-primary fas fa-trash-alt" %>
             </li>
         <% end %>
         </ul>
