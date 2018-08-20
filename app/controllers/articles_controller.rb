@@ -68,6 +68,7 @@ class ArticlesController < ApplicationController
         if !@article
             redirect_to topics_path, flash[:alert] ="Article not found. Id #{params[:id]}"
         end
+        Bookmark.clean(@article.id)
         @article.destroy
         redirect_to topics_path
     end

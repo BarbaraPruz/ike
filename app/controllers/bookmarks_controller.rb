@@ -2,10 +2,11 @@ class BookmarksController < ApplicationController
     before_action :require_logged_in
 
     def create
+        @article = Article.find_by(:id => params[:article_id])
         # To Do - verify article 
-        bookmark = Bookmark.create(:article_id => params[:article_id], :user_id => @current_user.id)
+        bookmark = Bookmark.create(:article_id => @article.id, :user_id => @current_user.id)
         # To Do - handle errors?
-        redirect_to user_path(@current_user)
+        redirect_to topic_article_path(@article.topic, @article)
     end
 
     def destroy
