@@ -1,25 +1,25 @@
-<h1>Topica Index</h1>
-<ul>
-<% @topics.each do |topic| %>
-    <li>
-        <%= topic.name %>
-        <% if is_admin? %>
-            <%= link_to "Edit", { :controller => 'topics',  :action=>"edit", :id => topic.id} %>
-            <%= link_to "Delete", { :controller => 'topics',  :action=>"destroy", 
-            :id => topic.id} , :method => :delete if topic.articles.count == 0 %>
-        <% end %> 
-    </li>
-    <ul>
-        <% topic.articles.each do |article| %>
-            <li><%= link_to article.title, topic_article_path(topic,article) %>
-            <% if is_admin? %>
-                <%= link_to "Delete", { :controller => 'articles',  :action=>"destroy", 
-                :id => article.id, :topic_id => topic.id} , :method => :delete %>
-                <%= link_to "Edit", { :controller => 'articles',  :action=>"edit", 
-                :id => article.id, :topic_id => topic.id} %>
-            <% end %>   
-            </li>         
-        <% end %>
+<h1>Topic Index</h1>
+<div class="indent">
+    <ul class="list-unstyled">
+    <% @topics.each do |topic| %>
+        <li>
+            <%= topic.name %>
+            <%= link_to "Edit", { :controller => 'topics',  :action=>"edit", 
+            :id => topic.id}, :class => "btn btn-outline-info fas fa-edit" %>
+            <% if topic.articles.count == 0 %>
+                <%= link_to "Delete", 
+                    { :controller => 'topics',  :action=>"destroy", :id => topic.id}, 
+                    :method => :delete, :class => "btn btn-outline-warning fas fa-trash-alt" %>
+            <% end %>
+        </li>
+        <ul>
+            <% topic.articles.each do |article| %>
+                <li><%= link_to article.title, topic_article_path(topic.id, article.id) %></li>         
+            <% end %>
+        </ul>
+    <% end %>
     </ul>
-<% end %>
-                                              
+</div>
+
+
+
