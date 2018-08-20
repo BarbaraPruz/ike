@@ -37,7 +37,7 @@ body {
   margin-right: auto;
   width: 40%;
 }
-.section-area {
+.outlined-section {
     //background:#f8f8f8;;
     padding: 2em;
     border: 1px ridge #FFF6A9; // to look thinner than #FFED53;
@@ -46,7 +46,15 @@ body {
   color: red;
   font-style: bold;
 }
-
+.indent {
+  margin-left: 3em;
+}
+blockquote {
+  width: 65%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 1em;
+}
 h1 {
   color: #2C608F; //#135CB5; //#0F4C9B;
 }

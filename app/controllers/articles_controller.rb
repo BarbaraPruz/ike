@@ -28,7 +28,8 @@ class ArticlesController < ApplicationController
             redirect_to user_home_path(@current_user.id), flash[:alert] ="Article not found. Id #{params[:id]}"
         end
         @article.update(:helpful_count => @article.helpful_count+1) 
-        redirect_to topics_path
+        @topic = @article.topic
+        render "show"
     end
 
     def new

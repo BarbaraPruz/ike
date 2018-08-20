@@ -5,7 +5,7 @@
 <%= link_to "Edit Profile", edit_user_path(@current_user.id) %>
 <div class="row">
     <div class="col-sm-1"></div>
-    <div class="col-sm-4 section-area">    
+    <div class="col-sm-4 outlined-section">    
         <h2>Latest Articles</h2>
         <ul class="list-unstyled">
         <% @latest_articles.each do |article| %>
@@ -16,7 +16,7 @@
         </ul>
     </div>
     <div class="col-sm-1"></div>
-    <div class="col-sm-4 section-area">
+    <div class="col-sm-4 outlined-section">
     <h2>Your Bookmarks</h2>
         <ul class="list-unstyled">
         <% @current_user.bookmarks.each do |bookmark| %>
