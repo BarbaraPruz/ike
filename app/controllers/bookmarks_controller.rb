@@ -15,7 +15,11 @@ class BookmarksController < ApplicationController
         @article = Article.find_by(:id => params[:bookmark][:article_id])
         if @article && bookmark_user_id.to_i==current_user.id
             bookmark = Bookmark.create(bookmark_params)
-            redirect_to topic_article_path(@article.topic, @article)
+            if bookmark.valid?
+                redirect_to topic_article_path(@article.topic, @article)
+            else
+                render :new
+            end
         else                  
             redirect_to user_path(@current_user.id), :alert => "Article or User not found"       
         end

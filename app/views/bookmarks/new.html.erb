@@ -1,11 +1,31 @@
-<h1>New BookMark for <%=@article.title%></h1>
-<%= form_for ([@article,@bookmark]) do |f|%>
-    <%= f.hidden_field :article_id %>
-    <%= f.hidden_field :user_id %>
-    <div class="form-group">
-        <%= f.label :title %>
-        <%= f.text_field :title %>
-    </div>
+<h1 class="text-center">New BookMark for <%=@article.title%></h1>
+<div class="form-area outlined-section">
 
-    <%= f.submit 'Create' %>
-<% end %>
+    <% if flash[:alert] %>
+    <div class="notice"><%= flash[:alert] %></div>
+    <% end %>
+
+    <%= form_for ([@article,@bookmark]) do |f|%>
+        <%= f.hidden_field :article_id %>
+        <%= f.hidden_field :user_id %>
+
+        <div class="row">
+            <div class="form-group">
+                <div class="col-sm-3">
+                    <%= f.label :title %>
+                </div>
+                <div class="col-sm-9">
+                    <%= f.text_field :title %>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4">
+                <%= f.submit 'Create', :class => "btn btn-primary btn-block" %>
+            </div>
+        </div>
+    <% end %>
+</div>
+
