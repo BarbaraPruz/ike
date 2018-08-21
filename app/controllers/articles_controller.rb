@@ -71,7 +71,7 @@ class ArticlesController < ApplicationController
         @article = Article.find(params[:id])
         @topic = Topic.find(params[:topic_id])
         if !@article || !@topic
-            redirect_to user_home_path(@current_user.id), flash[:alert] ="Article/Topic not found. Article Id #{params[:id]}"
+            redirect_to user_path(@current_user), :alert => "Article/Topic not found. Article Id #{params[:id]}"
         end
     end
 

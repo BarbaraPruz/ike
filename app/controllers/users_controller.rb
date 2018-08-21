@@ -43,8 +43,7 @@ class UsersController < ApplicationController
 
     def destroy
         if params[:id] == @current_user[:id]
-            flash[:alert] ="Sorry - you cannot delete yourself!"
-            redirect_to users_path
+            redirect_to users_path, :alert => "Sorry - you cannot delete yourself!"
         else
             get_user_instance_var
             @user.destroy
@@ -64,16 +63,14 @@ class UsersController < ApplicationController
 
     def require_admin_or_same_user
         if !is_admin? && current_user.id.to_s != params[:id]  
-            flash[:alert] ="Operation not allowed"
-            redirect_to user_path(@current_user.id)
+            redirect_to user_path(@current_user.id), :alert => "Operation not allowed"
         end
     end
 
     def get_user_instance_var
         @user=User.find(params[:id])
         if !@user
-            flash[:alert] ="User not found."
-            redirect_to user_update_return_path
+            redirect_to user_update_return_path, :alert => "User not found."
         end 
     end
 

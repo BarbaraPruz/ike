@@ -3,17 +3,22 @@ class BookmarksController < ApplicationController
 
     def new
         @article = Article.find_by(:id => params[:article_id])
-        # To Do - verify article 
+        if !@article
+            redirect_to user_path(@current_user.id), :alert => "Article not found."        
+        end
         @bookmark = Bookmark.new(:article_id => @article.id, :user_id => @current_user.id,
             :title => @article.title)
     end
 
     def create
-        @article = Article.find_by(:id => params[:article_id])
-        # To Do - verify article  and verify user is current user
-        bookmark = Bookmark.create(bookmark_params)
-        # To Do - handle errors?
-        redirect_to topic_article_path(@article.topic, @article)
+        bookmark_user_id = params[:bookmark][:user_id]
+        @article = Article.find_by(:id => params[:bookmark][:article_id])
+        if @article && bookmark_user_id.to_i==current_user.id
+            bookmark = Bookmark.create(bookmark_params)
+            redirect_to topic_article_path(@article.topic, @article)
+        else                  
+            redirect_to user_path(@current_user.id), :alert => "Article or User not found"       
+        end
     end
 
     def destroy
