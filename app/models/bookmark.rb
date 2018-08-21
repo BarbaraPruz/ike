@@ -3,7 +3,7 @@ class Bookmark  < ActiveRecord::Base
     validates :article_id, presence: true
     validates :user_id, presence: true
 
-    belongs_to :article  # , dependent: :destroy
+    belongs_to :article
     belongs_to :user
 
     def article_title
@@ -13,9 +13,4 @@ class Bookmark  < ActiveRecord::Base
         Article.find(self.article_id).topic_id
     end
 
-    def self.clean(article_id)
-        self.where(:article_id => article_id).each { |bookmark| 
-            bookmark.destroy
-        }
-    end
 end

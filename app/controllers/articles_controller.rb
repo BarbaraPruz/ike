@@ -1,4 +1,3 @@
-require 'pry'
 class ArticlesController < ApplicationController
     before_action :require_logged_in
     before_action :require_admin, only: [:new, :create, :destroy, :edit, :update]
@@ -50,9 +49,8 @@ class ArticlesController < ApplicationController
 
     def destroy
         get_article_and_topic_instance_vars
-        Bookmark.clean(@article.id)
         @article.destroy
-        redirect_to :index
+        redirect_to articles_path
     end
 
     private
