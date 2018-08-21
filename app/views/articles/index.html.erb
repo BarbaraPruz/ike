@@ -1,11 +1,15 @@
-<h1>Articles</h1>
-<%= form_tag articles_sort_path, method: "post" do %>
-    <h5>Sort Field</h5>
+<div class="row">
+    <div class="col-sm-8">
+        <h1>Articles</h1>
+    </div>
+    <div class="col-sm-4">
+        <%= form_tag articles_sort_path, method: "post" do %> 
+            <%= select_tag "sort", options_for_select(@sort.collect{ |u| [u[:display], u[:value]] }) %>  
+            <%= submit_tag "Sort" %>
+        <% end %>
+    </div>
+</div>
 
-    <%= select_tag "sort", options_for_select(@sort.collect{ |u| [u[:display], u[:value]] }) %>
-
-    <%= submit_tag "Sort" %>
-<% end %>
 <table class="table">
     <thead>
         <tr>

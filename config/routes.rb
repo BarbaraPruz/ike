@@ -23,11 +23,6 @@ Rails.application.routes.draw do
     end
     post '/articles/sort' => 'articles#sort', as: :articles_sort
 
-    # articles and bookmarks
-    # get '/articles/:article_id/bookmarks/new' => 'bookmarks#new'
-    # post '/articles/:article_id/bookmarks/create' => 'bookmarks#create'
-    # delete '/articles/:article_id/bookmark/:id' => 'bookmarks#destroy'
- 
     # miscellaneous
     get '/about' => 'static#about'
 end

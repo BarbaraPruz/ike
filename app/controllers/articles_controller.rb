@@ -20,7 +20,7 @@ class ArticlesController < ApplicationController
     def like
         get_article_and_topic_instance_vars
         @article.update(:helpful_count => @article.helpful_count+1) 
-        render :show
+        redirect_to topic_article_path(@topic, @article)
     end
 
     def new
@@ -60,7 +60,8 @@ class ArticlesController < ApplicationController
     end
 
     def sort_params (checked)
-        columns = [{value: "topic",display: "Topic"},
+        columns = [ {value: "", display: "Choose Sort Field"},
+                    {value: "topic",display: "Topic"},
                    {value: "title",display: "Title"},
                    {value: "helpful_count",display: "Likes"},
                 { value: "created_at",display: "Date"}]
