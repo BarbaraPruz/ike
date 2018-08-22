@@ -1,14 +1,9 @@
 <h1>Edit Topic</h1>
 <%= form_for @topic  do |f| %>
     <% if @topic.errors.any? %>
-        <div id="error_explanation">
-        <ul>
-            <% @topic.errors.full_messages.each do |message| %>
-            <li><%= message %></li>
-            <% end %>
-        </ul>
-        </div>
+        <%= show_error_messages(@topic) %>
     <% end %>
+    
     <div class="form-group <%= 'has-error' if @topic.errors.has_key?(:name) %>">
         <%= f.label :name %>
         <%= f.text_field :name %>

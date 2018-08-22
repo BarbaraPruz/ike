@@ -1,8 +1,8 @@
 <h1 class="text-center">New BookMark for <%=@article.title%></h1>
 <div class="form-area outlined-section">
 
-    <% if flash[:alert] %>
-    <div class="notice"><%= flash[:alert] %></div>
+    <% if @bookmark.errors.any? %>
+        <%= show_error_messages(@bookmark) %>
     <% end %>
 
     <%= form_for ([@article,@bookmark]) do |f|%>

@@ -30,9 +30,10 @@ class ArticlesController < ApplicationController
 
     def create
         @article = Article.create(article_params) 
-        if @article
+        if @article.valid?
             redirect_to topic_article_path(@article.topic, @article)
         else
+            @topics = Topic.all
             render :new
         end        
     end
@@ -44,7 +45,12 @@ class ArticlesController < ApplicationController
     def update
         get_article_and_topic_instance_vars
         @article.update(article_params)
-        redirect_to topic_article_path(@topic, @article) 
+        if @article.valid?
+            redirect_to topic_article_path(@article.topic_id, @article) 
+        else
+            @topics = Topic.all
+            render :edit
+        end
     end
 
     def destroy

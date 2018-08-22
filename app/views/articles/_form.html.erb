@@ -1,14 +1,7 @@
 <div class="indent outlined-section">
     <%= form_for article, url: {action: form_action, params: {id: article.id}} do |f|%>
         <% if article.errors.any? %>
-            <div id="error_explanation">
-            <h2>oops, there seem to be some problems:</h2>
-            <ul>
-                <% article.errors.full_messages.each do |message| %>
-                <li><%= message %></li>
-                <% end %>
-            </ul>, :url => :action => 'myaction'
-            </div>
+            <%= show_error_messages(article) %>
         <% end %>
 
         <div class="row">

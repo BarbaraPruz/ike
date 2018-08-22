@@ -1,4 +1,3 @@
-require 'pry'
 class TopicsController < ApplicationController
     before_action :require_logged_in
     before_action :require_admin, only: [:admin_index, :edit, :update, :destroy]
@@ -17,8 +16,12 @@ class TopicsController < ApplicationController
             flash[:alert] ="Error. Topic not found."
         else
             @topic.update(topic_params)
+            if @topic.valid?
+                redirect_to topics_path
+            else
+                render :edit
+            end
         end
-        redirect_to topics_path
     end
 
     def destroy

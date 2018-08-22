@@ -2,14 +2,7 @@
 <div class="form-area outlined-section">
     <%= form_for @user do |f|%>
         <% if @user.errors.any? %>
-            <div id="error_explanation">
-            <h2>oops, there seem to be some problems:</h2>
-            <ul>
-                <% @user.errors.full_messages.each do |message| %>
-                <li><%= message %></li>
-                <% end %>
-            </ul>
-            </div>
+            <%= show_error_messages(@user) %>
         <% end %>
 
         <div class="row">

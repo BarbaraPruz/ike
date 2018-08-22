@@ -17,7 +17,7 @@ Rails.application.routes.draw do
     end
     post '/topics/:topic_id/articles/:id/like' => 'articles#like'
 
-    # article specific routes and bookmarks 
+    # article specific routes (no topic) and bookmarks 
     resources :articles, only: [:new, :create, :index] do 
         resources :bookmarks, only: [:new, :create, :destroy]
     end

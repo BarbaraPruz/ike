@@ -11,4 +11,14 @@ module ApplicationHelper
     def format_time (time)
       time.strftime("%d %b. %Y")
     end
+
+    def show_error_messages (ar_object)
+      
+        html="<div id='error_explanation'><p>oops, there seem to be some problems:</p><ul>"
+        ar_object.errors.full_messages.each do |message| 
+            html += "<li>#{message}</li>"
+        end
+        html += "<ul></div>"
+        html.html_safe
+    end
 end

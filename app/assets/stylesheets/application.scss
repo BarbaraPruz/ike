@@ -38,7 +38,6 @@ body {
   width: 40%;
 }
 .outlined-section {
-    //background:#f8f8f8;;
     padding: 2em;
     border: 1px ridge #FFF6A9; // to look thinner than #FFED53;
 }
@@ -55,37 +54,13 @@ blockquote {
   margin-right: auto;
   margin-bottom: 1em;
 }
-h1 {
+h1,h2,h3,h4,h5 {
   color: #2C608F; //#135CB5; //#0F4C9B;
 }
 .form-area label {
   color: #2C608F; //#135CB5;
 }
-// .theme-dropdown .dropdown-menu {
-//   position: static;
-//   display: block;
-//   margin-bottom: 20px;
-// }
+.underline-heading {
+  border-bottom: 2px solid #FFED53;
+}
 
-// .theme-showcase > p > .btn {
-//   margin: 5px 0;
-// }
-
-// .center {
-//   text-align: center;
-// }
-
-// .pic,
-// .info {
-//   padding: 20px;
-//   display: inline-block;
-//   background-color: #eeeeee;
-//   border-radius: 7px;
-//   vertical-align: middle;
-//   margin: 10px;
-// }
-
-// .info {
-//   height: 290px;
-//   text-align: left;
-// }
