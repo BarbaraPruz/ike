@@ -1,7 +1,7 @@
 <h1 class="text-center">Welcome to ‛iki</h1>
 <div class="form-area outlined-section">
-    <% if flash[:alert] %>
-        <div class="notice"><%= flash[:alert] %></div>
+    <% if flash[:welcome_alert] %>
+        <div class="notice"><%= flash[:welcome_alert] %></div>
     <% end %>
 
     <%= form_tag login_path do %>
