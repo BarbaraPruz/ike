@@ -3,8 +3,10 @@
         <h1>Articles</h1>
     </div>
     <div class="col-sm-4">
-        <%= form_tag articles_sort_path, method: "post" do %> 
-            <%= select_tag "sort", options_for_select(@sort.collect{ |u| [u[:display], u[:value]] }) %>  
+        <%= form_tag articles_path, method: "get" do %> 
+            <%= select_tag "sort", 
+                options_for_select(@sort.collect{ |u| [u[:display], u[:value]] },
+                @sort_field) %>  
             <%= submit_tag "Sort" %>
         <% end %>
     </div>

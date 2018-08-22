@@ -21,7 +21,6 @@ Rails.application.routes.draw do
     resources :articles, only: [:new, :create, :index] do 
         resources :bookmarks, only: [:new, :create, :destroy]
     end
-    post '/articles/sort' => 'articles#sort', as: :articles_sort
 
     # miscellaneous
     get '/about' => 'static#about'
