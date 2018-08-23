@@ -3,10 +3,8 @@ class ArticlesController < ApplicationController
     before_action :require_admin, only: [:new, :create, :destroy, :edit, :update]
 
     def index
-        params[:sort] = "topic" if !params[:sort]
-        @sort_field = params[:sort]
+        @sort_field = params[:sort] ? params[:sort] : "topic"
         @articles = Article.sort_by(@sort_field)
-        @sort = sort_params()
     end
 
     def show
@@ -59,14 +57,6 @@ class ArticlesController < ApplicationController
 
     def article_params
         params.require(:article).permit(:title, :content, :topic_id, :new_topic)
-    end
-
-    def sort_params ()
-        [ {value: "", display: "Choose Sort Field"},
-          {value: "topic", display: "Topic"},
-          {value: "title", display: "Title"},
-          {value: "helpful_count", display: "Likes"},
-          {value: "updated_at", display: "Latest Update"}] 
     end
 
     def get_article_and_topic_instance_vars
