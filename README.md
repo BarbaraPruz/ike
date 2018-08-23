@@ -13,6 +13,9 @@ Admin users have additional functionality
 - Create, edit or delete an article
 - Create, edit or delete a topic
 
+Installation Instructions
+-------------------------
+Fork and clone this GIT repo.
 
 Running ike
 ------------------

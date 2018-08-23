@@ -22,6 +22,7 @@ module ApplicationHelper
         html.html_safe
     end
 
+    # article index sort helpers
     def sort_select_tag (sort_field)
         fields= [{value: '', display: 'Choose Sort Field'}, 
                  {value: 'topic', display: 'Topic'},
