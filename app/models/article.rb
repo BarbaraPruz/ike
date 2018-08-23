@@ -28,6 +28,6 @@ class Article  < ActiveRecord::Base
     end
 
     def self.get_latest (number_articles)
-        self.last(number_articles)
+        self.last(number_articles).sort { |x,y| y.created_at <=> x.created_at }
     end
 end
