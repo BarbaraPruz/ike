@@ -21,7 +21,7 @@ class Article  < ActiveRecord::Base
 
     def new_topic=(data)
         if !data.empty?
-            self.topic = Topic.create(:name => data)
+            self.topic = Topic.find_or_create_by(:name => data)
         end
     end
     def new_topic
