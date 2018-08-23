@@ -9,7 +9,7 @@ module ApplicationHelper
     end 
     
     def format_time (time)
-      time.strftime("%d %b. %Y")
+      time.strftime ("%d %b. %Y %H:%M")
     end
 
     def show_error_messages (ar_object)

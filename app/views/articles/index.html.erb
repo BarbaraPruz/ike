@@ -18,7 +18,7 @@
             <th scope="col">Topic</th>
             <th scope="col">Title</th>
             <th scope="col">Likes</th>
-            <th scope="col">Date</th>
+            <th scope="col">Last Update</th>
         </tr>
     </thead>
     <tbody>
@@ -27,7 +27,7 @@
             <th scope="row"><%= article.topic.name %></th>
             <td><%= link_to article.title, topic_article_path(article.topic_id,article) %></td>
             <td><%= article.helpful_count %></td>
-            <td><%= format_time(article.created_at) %></td>
+            <td><%= format_time(article.updated_at) %></td>
         </tr>
     <% end %>
   </tbody>

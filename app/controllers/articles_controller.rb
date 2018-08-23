@@ -66,7 +66,7 @@ class ArticlesController < ApplicationController
           {value: "topic", display: "Topic"},
           {value: "title", display: "Title"},
           {value: "helpful_count", display: "Likes"},
-          {value: "created_at", display: "Date"}] 
+          {value: "updated_at", display: "Latest Update"}] 
     end
 
     def get_article_and_topic_instance_vars

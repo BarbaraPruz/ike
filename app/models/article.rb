@@ -1,4 +1,3 @@
-require 'pry'
 class Article  < ActiveRecord::Base
     belongs_to :topic
     has_many :bookmarks, dependent: :destroy
@@ -7,11 +6,12 @@ class Article  < ActiveRecord::Base
     validates :title, presence: true
     validates :topic, presence: true
     
-    def self.sort_by (column)
-        if column == "topic"
-            Article.joins(:topic).merge(Topic.order(name: :asc))
+    def self.sort_by (sort_column)
+        order = ["helpful_count", "updated_at"].include?(sort_column) ? :desc : :asc
+        if sort_column == "topic"
+            Article.joins(:topic).merge(Topic.order(name: order))
         else
-            Article.order(column)
+            Article.order("#{sort_column} #{order}")
         end
     end
 
