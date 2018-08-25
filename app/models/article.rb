@@ -16,7 +16,7 @@ class Article  < ActiveRecord::Base
     end
 
     def topic_name
-        self.topic.name
+        self.topic ? self.topic.name : nil
     end
 
     def new_topic=(data)

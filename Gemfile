@@ -39,7 +39,8 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'tinymce-rails'
 
 gem 'omniauth'
-gem 'omniauth-github'
+#gem 'omniauth-github'
+gem "omniauth-google-oauth2"
 gem 'dotenv-rails'
 
 # Use Capistrano for deployment

@@ -26,7 +26,7 @@ Test user logins:
     johnny@domain.com  password: test
     daisy@domain.com password: test
     lilyy@domain.com password: test  --- Admin
-or use GitHub to login or Sign Up to create a different id.
+or use Google to login or Sign Up to create a different id.
 
 Contributing
 ------------
