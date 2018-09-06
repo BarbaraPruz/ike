@@ -35,6 +35,10 @@ class BookmarksController < ApplicationController
         redirect_to user_path(@current_user)
     end
 
+    def latest
+        @bookmarks = Bookmark.latest
+    end
+
     private
     def bookmark_params
         params.require(:bookmark).permit(:user_id, :article_id, :title)

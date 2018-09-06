@@ -12,5 +12,11 @@ class Bookmark  < ActiveRecord::Base
     def topic_id
         Article.find(self.article_id).topic_id
     end
-
+    def username
+        user = User.find_by(:id => self.user_id)
+        user ? user.name : nil
+    end
+    def self.latest
+        self.order(created_at: :desc)
+    end
 end

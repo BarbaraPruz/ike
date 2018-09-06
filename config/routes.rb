@@ -21,7 +21,8 @@ Rails.application.routes.draw do
     resources :articles, only: [:new, :create, :index] do 
         resources :bookmarks, only: [:new, :create, :destroy]
     end
-
+    get '/bookmarks/latest' => 'bookmarks#latest'
+    
     # miscellaneous
     get '/about' => 'static#about'
 end

@@ -14,6 +14,7 @@ class TopicsController < ApplicationController
         @topic = Topic.find_by(:id => params[:id])
         if !@topic
             flash[:alert] ="Error. Topic not found."
+            redirect_to topics_path
         else
             @topic.update(topic_params)
             if @topic.valid?
