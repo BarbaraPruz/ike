@@ -3,7 +3,8 @@ class User < ActiveRecord::Base
 
     has_many :bookmarks, dependent: :destroy
     has_many :articles, through: :bookmarks
-
+    has_many :comments
+    
     validates :name, presence: true
     validates :email, presence: true, uniqueness: true
     validates :password, presence: true, on: :create

@@ -2,6 +2,7 @@ class Article  < ActiveRecord::Base
     belongs_to :topic
     has_many :bookmarks, dependent: :destroy
     has_many :users, through: :bookmarks
+    has_many :comments
     
     validates :title, presence: true
     validates :topic, presence: true
