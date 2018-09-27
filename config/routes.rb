@@ -9,7 +9,7 @@ Rails.application.routes.draw do
     get "/auth/:provider/callback" => "sessions#create"
 
     resources :users
-    
+
     # topics and articles
     # ? No plans for routes topics/:id, topics/new, topics/:create
     resources :topics do
@@ -20,6 +20,11 @@ Rails.application.routes.draw do
     # article specific routes (no topic) and bookmarks 
     resources :articles, only: [:new, :create, :index] do 
         resources :bookmarks, only: [:new, :create, :destroy]
+    end
+
+    # article specific routes (no topic) and comments
+    resources :articles, only: [:show] do 
+        resources :comments, only: [:new, :create]
     end
 
     # miscellaneous
