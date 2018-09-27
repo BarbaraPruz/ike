@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     resources :users
 
     resources :topics, only: [:index, :edit, :update, :destroy]
+    get '/topics/admin' => 'topics#admin'
 
     # article and comments and bookmarks
     resources :articles do

@@ -6,6 +6,10 @@ class TopicsController < ApplicationController
         @topics = Topic.all
     end
 
+    def admin
+        @topics = Topic.all
+    end
+
     def edit
         @topic = Topic.find_by(:id => params[:id])
     end
