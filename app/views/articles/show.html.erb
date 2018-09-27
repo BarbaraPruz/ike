@@ -4,7 +4,7 @@
     </div>
     <div class="col-sm-2">
         <div class="row"></div>
-        <div class="row"><p>Topic - <%= @topic.name %></p></div>
+        <div class="row"><p>Topic - <%= @article.topic_name %></p></div>
         <div class="row">
             Helpful Count: <%=@article.helpful_count%>
             <%= link_to "", { :controller => 'articles',  :action=>"like", 
@@ -23,10 +23,10 @@
         <p>
             <strong>Article Admin:</strong>
             <%= link_to "Delete", { :controller => 'articles',  :action=>"destroy", 
-            :id => @article.id, :topic_id => @topic.id} , :method => :delete,
+            :id => @article.id, :topic_id => @article.topic_id} , :method => :delete,
             :class => "btn btn-warning" %>
             <%= link_to "Edit", { :controller => 'articles',  :action=>"edit", 
-            :id => @article.id, :topic_id => @topic.id}, 
+            :id => @article.id, :topic_id => @article.topic_id}, 
             :class => "btn btn-info" %>
         </p>
     </div>
@@ -44,4 +44,11 @@
             <h5 class="mt-0"><%= comment.author_name %> on <%= format_time(comment.created_at) %></h5>  
         </div>
     <% end %>
+
+    <h4>Add Comment</h4>
+    <%= form_tag("/articles/#{@article.id}/comments") do %>
+        Comment: <%= text_field_tag "content" %><br>
+        <%= submit_tag "Add Comment" %>
+     <% end %>
+
 </div>

@@ -8,13 +8,13 @@ class ArticlesController < ApplicationController
     end
 
     def show
-        get_article_and_topic_instance_vars
+        @article = Article.find(params[:id])
     end
 
     def like
-        get_article_and_topic_instance_vars
+        get_article
         @article.update(:helpful_count => @article.helpful_count+1) 
-        redirect_to topic_article_path(@topic, @article)
+        redirect_to @article
     end
 
     def new
@@ -25,7 +25,7 @@ class ArticlesController < ApplicationController
     def create
         @article = Article.create(article_params) 
         if @article.valid?
-            redirect_to topic_article_path(@article.topic, @article)
+            redirect_to @article
         else
             @topics = Topic.all
             render :new
@@ -33,14 +33,14 @@ class ArticlesController < ApplicationController
     end
 
     def edit
-        get_article_and_topic_instance_vars
+        get_article
         @topics = Topic.all
     end
     def update
-        get_article_and_topic_instance_vars
+        get_article
         @article.update(article_params)
         if @article.valid?
-            redirect_to topic_article_path(@article.topic_id, @article) 
+            redirect_to @article 
         else
             @topics = Topic.all
             render :edit
@@ -48,7 +48,7 @@ class ArticlesController < ApplicationController
     end
 
     def destroy
-        get_article_and_topic_instance_vars
+        get_article
         @article.destroy
         redirect_to articles_path
     end
@@ -59,11 +59,10 @@ class ArticlesController < ApplicationController
         params.require(:article).permit(:title, :content, :topic_id, :new_topic)
     end
 
-    def get_article_and_topic_instance_vars
+    def get_article
         @article = Article.find(params[:id])
-        @topic = Topic.find(params[:topic_id])
-        if !@article || !@topic
-            redirect_to user_path(@current_user), :alert => "Article/Topic not found. Article Id #{params[:id]}"
+        if !@article 
+            redirect_to user_path(@current_user), :alert => "Article not found. Article Id #{params[:id]}"
         end
     end
 

@@ -16,7 +16,7 @@ class BookmarksController < ApplicationController
         if @article && bookmark_user_id.to_i==current_user.id
             @bookmark = Bookmark.create(bookmark_params)
             if @bookmark.valid?
-                redirect_to topic_article_path(@article.topic, @article)
+                redirect_to @article
             else
                 render :new
             end

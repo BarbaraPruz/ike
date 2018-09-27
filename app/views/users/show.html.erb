@@ -10,7 +10,7 @@
         <ul class="list-unstyled">
         <% @latest_articles.each do |article| %>
             <li>
-                <%=format_time(article.created_at)%> - <%= link_to "#{article.title}", topic_article_path(article.topic_id,article) %>
+                <%=format_time(article.created_at)%> - <%= link_to "#{article.title}", article_path(article) %>
             </li>
         <% end %>
         </ul>
@@ -22,7 +22,7 @@
         <% @current_user.bookmarks.each do |bookmark| %>
             <li>
                 <%= link_to bookmark.title, 
-                    topic_article_path(bookmark.topic_id, bookmark.article_id) %>
+                    article_path(bookmark.article_id) %>
                 <%= link_to "", 
                     { :controller => 'bookmarks',  :action=>"destroy", :id => bookmark.id, article_id:bookmark.article_id }, 
                     :method => :delete, class: "btn btn-outline-primary fas fa-trash-alt" %>

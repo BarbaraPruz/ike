@@ -10,22 +10,14 @@ Rails.application.routes.draw do
 
     resources :users
 
-    # topics and articles
-    # ? No plans for routes topics/:id, topics/new, topics/:create
-    resources :topics do
-        resources :articles, except: [:new, :create, :index] 
-    end
-    post '/topics/:topic_id/articles/:id/like' => 'articles#like'
+    resources :topics, only: [:index, :edit, :update, :destroy]
 
-    # article specific routes (no topic) and bookmarks 
-    resources :articles, only: [:new, :create, :index] do 
-        resources :bookmarks, only: [:new, :create, :destroy]
-    end
-
-    # article specific routes (no topic) and comments
-    resources :articles, only: [:show] do 
+    # article and comments and bookmarks
+    resources :articles do
         resources :comments, only: [:new, :create]
-    end
+        resources :bookmarks, only: [:new, :create, :destroy]
+    end    
+    post '/articles/:id/like' => 'articles#like'
 
     # miscellaneous
     get '/about' => 'static#about'

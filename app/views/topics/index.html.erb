@@ -14,7 +14,7 @@
         </li>
         <ul>
             <% topic.articles.each do |article| %>
-                <li><%= link_to article.title, topic_article_path(topic.id, article.id) %></li>         
+                <li><%= link_to article.title, article_path(article.id) %></li>         
             <% end %>
         </ul>
     <% end %>
