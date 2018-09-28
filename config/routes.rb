@@ -10,9 +10,10 @@ Rails.application.routes.draw do
 
     resources :users
 
-    resources :topics, only: [:index, :edit, :update, :destroy]
+    resources :topics, only: [:index, :edit, :show, :update, :destroy]
     get '/topics/admin' => 'topics#admin'
-
+    get '/topics/:id/articles/:article_id' => 'topics#topic_articles', as: :topic_articles
+ 
     # article and comments and bookmarks
     resources :articles do
         resources :comments, only: [:new, :create]
