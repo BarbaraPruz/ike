@@ -19,6 +19,8 @@ gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
+# for JSON backend
+gem 'active_model_serializers'
 
 # bootstrap
 

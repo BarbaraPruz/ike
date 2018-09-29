@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     get '/topics/:id/articles/:article_id' => 'topics#topic_articles', as: :topic_articles
  
     # article and comments and bookmarks
+    get '/articles/index_data' => 'articles#index_data'
     resources :articles do
         resources :comments, only: [:new, :create]
         resources :bookmarks, only: [:new, :create, :destroy]

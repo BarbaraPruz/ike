@@ -3,8 +3,13 @@ class ArticlesController < ApplicationController
     before_action :require_admin, only: [:new, :create, :destroy, :edit, :update]
 
     def index
-        @sort_field = params[:sort] ? params[:sort] : "topic"
-        @articles = Article.sort_by(@sort_field)
+        @articles = Array.new   # real work is done in index_data through ajax
+    end
+
+    def index_data
+       # @sort_field = params[:sort] ? params[:sort] : "topic"
+        @articles = Article.sort_by("topic")
+        render json: @articles
     end
 
     def show
