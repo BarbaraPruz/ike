@@ -7,8 +7,8 @@ class ArticlesController < ApplicationController
     end
 
     def index_data
-       # @sort_field = params[:sort] ? params[:sort] : "topic"
-        @articles = Article.sort_by("topic")
+        @sort_field = params[:sort] ? params[:sort] : "topic"
+        @articles = Article.sort_by(@sort_field)
         render json: @articles
     end
 

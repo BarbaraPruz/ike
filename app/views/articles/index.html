@@ -2,12 +2,18 @@
     <div class="col-sm-8">
         <h1>Articles</h1>
     </div>
-    <!-- <div class="col-sm-4">
-        <%= form_tag articles_path, method: "get" do %> 
-            <%= sort_select_tag(@sort_field) %>
-            <%= submit_tag "Sort" %>
-        <% end %>
-    </div> -->
+    <div class="col-sm-4">
+        <form>
+       <!-- <form action="/articles/index_data" accept-charset="UTF-8" method="get"><input name="utf8" type="hidden" value="&#x2713;" /> -->
+            <select name='sort' id='sort'>
+                <option   value=>Choose Sort Field</option>
+                <option   value=topic>Topic</option>
+                <option   value=title>Title</option>
+                <option   value=helpful_count>Likes</option>
+                <option   value=updated_at>Latest Update</option>
+            <input id="sort_button" type="submit" name="commit" value="Sort" data-disable-with="Sort" />         
+        </form>
+    </div> 
 </div>
 
 <table class="table" id="articles_table">
@@ -24,23 +30,26 @@
 </table>
 
 <script type="text/javascript" charset="utf-8">
-    function addRow (article) {
-        let html = `<tr>`;
-        html += `<th scope="row">${article.topic.name}</th>`;
-        // to do: link to article
-        html += `<td>${article.title}</td>`;
-        html += `<td>${article.helpful_count}</td>`;
-        // to do - format time
-        html += `<td>${article.updated_at}</td>`;
-        html += `</tr>`;
-        $("#articles_table tbody").append(html);
+    function createArticleTable (articles) {
+        $("#articles_table tbody").empty();
+        articles.forEach ( function (article) {
+            let html = `<tr>`;
+            html += `<th scope="row">${article.topic.name}</th>`;
+            html += `<td><a href="/articles/${article.id}">${article.title}</a></td>`;
+            html += `<td>${article.helpful_count}</td>`;
+            // to do - format time
+            html += `<td>${article.updated_at}</td>`;
+            html += `</tr>`;
+            $("#articles_table tbody").append(html);
+        });
     }
 
     $(function() {
         console.log("Articles index - ready");
-        $.get("/articles/index_data", function(articles) {
-             console.log("Index Data",JSON.stringify(articles));
-             articles.forEach ( article => addRow(article));
+        $.get("/articles/index_data", createArticleTable);
+        $("#sort_button").on("click", function(e) {
+            e.preventDefault();
+            $.get("/articles/index_data", { sort: `${$("#sort").val()}` }, createArticleTable);          
         });
     });
 </script>
