@@ -25,6 +25,7 @@ class Article  < ActiveRecord::Base
             self.topic = Topic.find_or_create_by(:name => data)
         end
     end
+
     def new_topic
     end
 

@@ -15,3 +15,5 @@
 //= require_tree .
 // tinymce is for rich text editing
 //= require tinymce
+// moment for js formatting of times
+//= require moment.min
