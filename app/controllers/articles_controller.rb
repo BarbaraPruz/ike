@@ -16,6 +16,26 @@ class ArticlesController < ApplicationController
         @article = Article.find(params[:id])
     end
 
+    def show_next
+        # Not efficient but will fix with JSON backend
+        last_article = Article.find(params[:id])
+        @topic = last_article.topic     
+        article_ids = @topic.article_ids  
+        last_index = last_article.id
+        new_index = article_ids.find_index { | id | 
+            id==last_index 
+        }
+        new_index+=1
+        if (new_index < 0) || (new_index == article_ids.length)
+            new_index = 0
+        end
+        @article = Article.find_by(:id => article_ids[new_index])
+            # to do: fix url, currently showing last article id 
+            # to do: share common template with articles show but with other buttons
+            #        and note that any links (like add bookmark) should come back to here!
+        render :show        
+    end
+
     def like
         get_article
         @article.update(:helpful_count => @article.helpful_count+1) 

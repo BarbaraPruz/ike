@@ -1,14 +1,23 @@
-<h1>Topics</h1>
+<h1>Topic Admin</h1>
 <div class="indent">
     <ul class="list-unstyled">
     <% @topics.each do |topic| %>
         <li>
             <%= topic.name %>
-            <%= link_to "Browse Articles", topic_path(topic.id) %>
+            <%= link_to "Edit", { :controller => 'topics',  :action=>"edit", 
+                :id => topic.id}, :class => "btn btn-outline-info fas fa-edit" %>
+            <% if topic.articles.count == 0 %>
+                <%= link_to "Delete", 
+                    { :controller => 'topics',  :action=>"destroy", :id => topic.id}, 
+                    :method => :delete, :class => "btn btn-outline-warning fas fa-trash-alt" %>
+            <% end %>
         </li>
+        <ul>
+            <% topic.articles.each do |article| %>
+                <li><%= link_to article.title, article_path(article.id) %></li>         
+            <% end %>
+        </ul>
     <% end %>
     </ul>
 </div>
-
-
 

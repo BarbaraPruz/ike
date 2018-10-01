@@ -10,9 +10,7 @@ Rails.application.routes.draw do
 
     resources :users
 
-    resources :topics, only: [:index, :edit, :show, :update, :destroy]
-    get '/topics/admin' => 'topics#admin'
-    get '/topics/:id/articles/:article_id' => 'topics#topic_articles', as: :topic_articles
+    resources :topics, only: [:index, :edit, :update, :destroy]
  
     # article and comments and bookmarks
     get '/articles/index_data' => 'articles#index_data'
@@ -21,6 +19,7 @@ Rails.application.routes.draw do
         resources :bookmarks, only: [:new, :create, :destroy]
     end    
     post '/articles/:id/like' => 'articles#like'
+    get '/articles/:id/show_next' => 'articles#show_next'
 
     # miscellaneous
     get '/about' => 'static#about'

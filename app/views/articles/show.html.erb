@@ -11,6 +11,10 @@
             :article_id => @article.id} , :method => :post, 
             class: "btn btn-outline-primary fas fa-thumbs-up"%>   
         </div>
+        <div class="row">
+            <%= link_to "Next Article in #{@article.topic.name}", 
+                "/articles/#{@article.id}/show_next" %>
+        </div>
     </div>
     <div class="col-sm-2">
         <%= link_to "Create Bookmark", 

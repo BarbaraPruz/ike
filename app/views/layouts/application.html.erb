@@ -26,19 +26,13 @@
           <ul class="nav navbar-nav">
             <li><a class="nav-link" href=<%= home_path %> >Home</a></li>  
             <% if logged_in? %>
-              <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Articles<span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="/articles">View All Articles</a></li>
-                  <li><a class="dropdown-item" href="/topics">Browse Topics</a></li> 
-                </ul>
-              </li>                    
+              <li><a class="nav-link" href="/articles">Articles</a></li>                 
               <% if is_admin? %>
                 <li class="dropdown">
                   <a class="dropdown-toggle" data-toggle="dropdown" href="#">Admin<span class="caret"></span></a>
                   <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="/users">Users</a></a></li>
-                    <li><a class="dropdown-item" href="/topics/admin">Topics</a></a></li>
+                    <li><a class="dropdown-item" href="/topics">Topics</a></a></li>
                     <li><a class="dropdown-item" href=<%= new_article_path %>>Create Article</a></a></li>
                   </ul>
                 </li>             
