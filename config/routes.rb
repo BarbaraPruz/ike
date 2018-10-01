@@ -19,7 +19,7 @@ Rails.application.routes.draw do
         resources :bookmarks, only: [:new, :create, :destroy]
     end    
     post '/articles/:id/like' => 'articles#like'
-    get '/articles/:id/show_next' => 'articles#show_next'
+  #  get '/articles/:id/show_next' => 'articles#show_next'
 
     # miscellaneous
     get '/about' => 'static#about'

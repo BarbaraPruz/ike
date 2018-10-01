@@ -9,37 +9,22 @@ class ArticlesController < ApplicationController
     def index_data
         @sort_field = params[:sort] ? params[:sort] : "topic"
         @articles = Article.sort_by(@sort_field)
-        render json: @articles
+        render json: @articles, serializer: ArticleIndexSerializer
     end
 
     def show
         @article = Article.find(params[:id])
-    end
-
-    def show_next
-        # Not efficient but will fix with JSON backend
-        last_article = Article.find(params[:id])
-        @topic = last_article.topic     
-        article_ids = @topic.article_ids  
-        last_index = last_article.id
-        new_index = article_ids.find_index { | id | 
-            id==last_index 
-        }
-        new_index+=1
-        if (new_index < 0) || (new_index == article_ids.length)
-            new_index = 0
-        end
-        @article = Article.find_by(:id => article_ids[new_index])
-            # to do: fix url, currently showing last article id 
-            # to do: share common template with articles show but with other buttons
-            #        and note that any links (like add bookmark) should come back to here!
-        render :show        
+        @topic_articles = @article.topic.article_ids;
+        respond_to do |format|
+            format.html { render :show }
+            format.json { render json: @article}
+          end    
     end
 
     def like
         get_article
         @article.update(:helpful_count => @article.helpful_count+1) 
-        redirect_to @article
+        render json: @article, serializer: ArticleLikesSerializer
     end
 
     def new
