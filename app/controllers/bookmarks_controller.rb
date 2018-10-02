@@ -11,17 +11,19 @@ class BookmarksController < ApplicationController
     end
 
     def create
-        bookmark_user_id = params[:bookmark][:user_id]
-        @article = Article.find_by(:id => params[:bookmark][:article_id])
+        # JSON Format
+        bookmark_user_id = params[:user_id]
+        @article = Article.find_by(:id => params[:article_id])
         if @article && bookmark_user_id.to_i==current_user.id
             @bookmark = Bookmark.create(bookmark_params)
             if @bookmark.valid?
-                redirect_to @article
+                render json: @bookmark, status: 201
             else
-                render :new
+                render json: @bookmark, status: 400
             end
-        else                  
-            redirect_to user_path(@current_user.id), :alert => "Article or User not found"       
+        else
+            @bookmark = Bookmark.new
+            render json: @bookmark, status: 401
         end
     end
 
@@ -37,6 +39,6 @@ class BookmarksController < ApplicationController
 
     private
     def bookmark_params
-        params.require(:bookmark).permit(:user_id, :article_id, :title)
+        params.permit(:user_id, :article_id, :bookmark_title)
     end
 end

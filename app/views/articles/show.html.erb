@@ -23,9 +23,15 @@
         </div>         
     </div>
     <div class="col-sm-2">
-        <%= link_to "Create Bookmark", 
-            { :controller => 'bookmarks',  :action=>"new", :article_id => @article.id}, 
-              :class => "btn btn-primary btn-sm" %>
+        <form id="create_bookmark">
+            <label>Bookmark</label>
+            <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+            <input type="hidden" name="user_id" value="<%= @current_user.id %>">
+            <!-- FIX THIS - need to update to match the displayed article -->
+            <input type="hidden" name="article_id" value="<%= @article.id %>"> 
+            <input id="bookmark_title" name="bookmark_title" type="text">  
+            <input type="submit"  value="Create">                         
+        </form>            
     </div>
 </div>
 <% if is_admin? %>
@@ -94,6 +100,18 @@ $(function() {
         // To Do: check for last index
         console.log ("going to get",`"/articles/${id}"`);
         $.get("/articles/" + id + ".json", showArticle);    
+     });
+     $("#create_bookmark").submit (function(e) {
+        e.preventDefault();
+        console.log("Create Bookmark!");
+        let id = $("#article_id").val();
+        var values = $(this).serialize();
+        console.log("Values",values);
+        $.post("/articles/" + id + "/bookmarks.json", values, function (bookmark) {
+            console.log("Bookmark Response", bookmark);
+            alert(`Bookmark "${bookmark.bookmark_title}" Created!`);
+            $("#bookmark_title").val('');        
+        });        
      });
 });
 </script>

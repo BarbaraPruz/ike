@@ -9,7 +9,7 @@ class ArticlesController < ApplicationController
     def index_data
         @sort_field = params[:sort] ? params[:sort] : "topic"
         @articles = Article.sort_by(@sort_field)
-        render json: @articles, serializer: ArticleIndexSerializer
+        render json: @articles, each_serializer: ArticleIndexSerializer
     end
 
     def show

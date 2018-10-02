@@ -20,8 +20,8 @@ a3 = Article.create(:title => "Herb Types", :topic_id => h1.id,
 a4 = Article.create(:title => "Apple Trees", :topic_id => f1.id,
                 :content => "<h2>Apple trees are best"+latin1+latin2)
 
-b1 = Bookmark.create(:user_id => u3.id, :article_id => a2.id, :title => "I don't like to water")
-b2 = Bookmark.create(:user_id => u1.id, :article_id => a4.id, :title => "My favorite tree")
+b1 = Bookmark.create(:user_id => u3.id, :article_id => a2.id, :bookmark_title => "I don't like to water")
+b2 = Bookmark.create(:user_id => u1.id, :article_id => a4.id, :bookmark_title => "My favorite tree")
 
 c1 = Comment.create(:user_id => u1.id, :article_id => a4.id, :content => latin4 );
 c2 = Comment.create(:user_id => u3.id, :article_id => a2.id, :content => "I prefer plants that need water" );

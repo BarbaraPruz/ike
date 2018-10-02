@@ -1,5 +1,5 @@
 class Bookmark  < ActiveRecord::Base
-    validates :title, presence: true
+    validates :bookmark_title, presence: true
     validates :article_id, presence: true
     validates :user_id, presence: true
 

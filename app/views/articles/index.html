@@ -31,6 +31,7 @@
 
 <script type="text/javascript" charset="utf-8">
     function createArticleTable (articles) {
+        console.log("Create Article Table");
         $("#articles_table tbody").empty();
         articles.forEach ( function (article) {
             let html = `<tr>`;

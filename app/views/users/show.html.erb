@@ -21,7 +21,7 @@
         <ul class="list-unstyled">
         <% @current_user.bookmarks.each do |bookmark| %>
             <li>
-                <%= link_to bookmark.title, 
+                <%= link_to bookmark.bookmark_title, 
                     article_path(bookmark.article_id) %>
                 <%= link_to "", 
                     { :controller => 'bookmarks',  :action=>"destroy", :id => bookmark.id, article_id:bookmark.article_id }, 
