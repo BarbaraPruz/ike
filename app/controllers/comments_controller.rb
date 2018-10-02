@@ -3,10 +3,11 @@ class CommentsController < ApplicationController
     before_action :require_logged_in
 
     def create
-        comment = Comment.create(:user_id => @current_user.id, :article_id => params[:article_id],
+        # Format JSON
+        @comment = Comment.create(:user_id => @current_user.id, :article_id => params[:article_id],
             :content => params[:content]);
         ## To Do if comment !valid?
-        redirect_to article_path(params[:article_id])         
+        render json: @comment       
     end
 
     private

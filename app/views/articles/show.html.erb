@@ -6,8 +6,8 @@
         <div class="row"></div>
         <div class="row"><p>Topic - <%= @article.topic_name %></p></div>
         <div class="row">
-            <form>
-                <input type="hidden" id="article_ids" name="article_ids" value=<%= @topic_articles %>>
+            <form>    
+                <input type="hidden" id="article_ids" name="article_ids" value=<%= @topic_articles.join(',') %>>
                 <input type="hidden" id="article_id" name="article_id" value=<%= @article.id %>>    
                 <input id="next" type="submit"  value="Next Article in Topic" />         
             </form>
@@ -27,8 +27,6 @@
             <label>Bookmark</label>
             <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
             <input type="hidden" name="user_id" value="<%= @current_user.id %>">
-            <!-- FIX THIS - need to update to match the displayed article -->
-            <input type="hidden" name="article_id" value="<%= @article.id %>"> 
             <input id="bookmark_title" name="bookmark_title" type="text">  
             <input type="submit"  value="Create">                         
         </form>            
@@ -64,37 +62,43 @@
     </div>
 
     <h4>Add Comment</h4>
-    <%= form_tag("/articles/#{@article.id}/comments") do %>
-        Comment: <%= text_field_tag "content" %><br>
-        <%= submit_tag "Add Comment" %>
-     <% end %>
-
+     <form id="new_comment">
+        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+        <input type="hidden" name="user_id" value="<%= @current_user.id %>">        
+        Comment: <input name="content" id="content" type="text"><br>
+        <input type="submit"  value="Add Comment">  
+    </form>
 </div>
 
 <script type="text/javascript" charset="utf-8">
 
+function addArticleIdtoFormValues (values) {
+    values+=`&article_id=${$("#article_id").text()}`
+    console.log ("updated values with", $("#article_id"));
+    return values;
+}
 function buildComment (comment) {
     let date = moment(`${comment.updated_at}`).format("YYYY-MM-DD HH:mm");
-     let html = `<div class="indent">`;
+    let html = `<div class="indent">`;
     html += `<div class="mb-0">${comment.content}</div>`;
     html += `<h5 class="mt-0">${comment.author_name} on ${date}</h5>`;
     html += `</div>`;
     return html;
 }
+
 function showArticle (article) {
-    console.log("Show Article", article);
+    console.log("Show Article!", article);
     $("#article_title").text(article.title);
     $("#article_helpful_count").text(article.helpful_count);
     $("#article_content").html(article.content);  
-    $("#article_id").text(article.id);
-    
+    $("#article_id").val(article.id);
+
     $("#comments_detail").empty();   
     article.comments.forEach ( function (comment) {
         $("#comments_detail").append(buildComment(comment));
     });
-
-
 }
+
 $(function() {
     console.log("Article Show - ready");
     $("#like").submit(function(e) {
@@ -112,11 +116,19 @@ $(function() {
         console.log("id",$("#article_id").val());
         e.preventDefault();
         let id = $("#article_id").val();
-        id = parseInt(id,10) + 1;
-        console.log("new id",id);     
-        // To Do: check for last index
-        console.log ("going to get",`"/articles/${id}"`);
-        $.get("/articles/" + id + ".json", showArticle);    
+        let idstring = $("#article_ids").val();
+        let ids = idstring.split(',').map( id => parseInt(id,10) );
+        id = parseInt(id,10);
+        console.log("xids", ids, "max index", ids.length-1);
+        let idx = ids.indexOf(id);          
+        if ( idx == (ids.length-1) ) { 
+            alert("Last Article in Topic!");
+        }
+        else {
+            id = ids[++idx];
+            console.log ("going to get",`"/articles/${id}"`);
+            $.get("/articles/" + id + ".json", showArticle);
+        }    
      });
      $("#create_bookmark").submit (function(e) {
         e.preventDefault();
@@ -128,6 +140,17 @@ $(function() {
             console.log("Bookmark Response", bookmark);
             alert(`Bookmark "${bookmark.bookmark_title}" Created!`);
             $("#bookmark_title").val('');        
+        });        
+     });
+     $("#new_comment").submit (function(e) {
+        e.preventDefault();
+        console.log("New Comment!");
+        let id = $("#article_id").val();
+        var values = $(this).serialize();
+        $.post("/articles/" + id + "/comments.json", values, function (comment) {
+            console.log("Comment Response", comment); 
+            $("#comments_detail").append(buildComment(comment));     
+            $("#content").val(''); // Comment form - content field 
         });        
      });
 });
