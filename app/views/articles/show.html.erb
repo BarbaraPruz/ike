@@ -54,12 +54,14 @@
 
 <div id="comments" class="indent">
     <h3>Comments</h3>
-    <% @article.comments.each do |comment| %>
-        <div class="indent">
-            <div class="mb-0"><%= sanitize comment.content %></div>
-            <h5 class="mt-0"><%= comment.author_name %> on <%= format_time(comment.created_at) %></h5>  
-        </div>
-    <% end %>
+    <div id="comments_detail">
+        <% @article.comments.each do |comment| %>
+            <div class="indent">
+                <div class="mb-0"><%= sanitize comment.content %></div>
+                <h5 class="mt-0"><%= comment.author_name %> on <%= format_time(comment.created_at) %></h5>  
+            </div>
+        <% end %>
+    </div>
 
     <h4>Add Comment</h4>
     <%= form_tag("/articles/#{@article.id}/comments") do %>
@@ -71,12 +73,27 @@
 
 <script type="text/javascript" charset="utf-8">
 
+function buildComment (comment) {
+    let date = moment(`${comment.updated_at}`).format("YYYY-MM-DD HH:mm");
+     let html = `<div class="indent">`;
+    html += `<div class="mb-0">${comment.content}</div>`;
+    html += `<h5 class="mt-0">${comment.author_name} on ${date}</h5>`;
+    html += `</div>`;
+    return html;
+}
 function showArticle (article) {
     console.log("Show Article", article);
     $("#article_title").text(article.title);
     $("#article_helpful_count").text(article.helpful_count);
     $("#article_content").html(article.content);  
-    $("#article_id").text(article.id);  
+    $("#article_id").text(article.id);
+    
+    $("#comments_detail").empty();   
+    article.comments.forEach ( function (comment) {
+        $("#comments_detail").append(buildComment(comment));
+    });
+
+
 }
 $(function() {
     console.log("Article Show - ready");
