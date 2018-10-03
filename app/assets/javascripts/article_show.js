@@ -84,7 +84,7 @@ $(function() {
         $.post("/articles/" + id + "/comments.json", values, function (comment) {
             console.log("Comment Response", comment); 
             $("#comments_detail").append(buildComment(comment));     
-            $("#content").val(''); // Comment form - content field 
+            $("#content").val(' '); // Comment form - content field            
         });        
      });
 });

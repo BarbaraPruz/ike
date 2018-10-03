@@ -58,13 +58,12 @@
         <% end %>
     </div>
 
-    <h4>Add Comment</h4>
-     <form id="new_comment">
+    <h3>Add Comment</h3>
+    <form id="new_comment">
         <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
         <input type="hidden" name="user_id" value="<%= @current_user.id %>">        
-        <textarea name="content" class="tinymce" id="content" rows="4" cols="50"></textarea>
-        <%= tinymce %>      
+        <textarea name="content" id="content" rows="5" cols="70"></textarea>
         <input type="submit"  value="Add Comment">  
-    </form>
+    </form>   
 </div>
 <%= javascript_include_tag('article_show.js') %>
