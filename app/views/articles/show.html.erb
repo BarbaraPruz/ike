@@ -1,17 +1,14 @@
 <div class="row outlined-section">
     <div class="col-sm-8">
         <h2 id="article_title"><%= @article.title %></h2>
+        <p>Topic - <%= @article.topic_name %></p>
+        <form>    
+            <input type="hidden" id="article_ids" name="article_ids" value=<%= @topic_articles.join(',') %>>
+            <input type="hidden" id="article_id" name="article_id" value=<%= @article.id %>>    
+            <input id="next" type="submit"  class="btn btn-primary btn-sm" value="Next Article in Topic" />         
+        </form>
     </div>
     <div class="col-sm-2">
-        <div class="row"></div>
-        <div class="row"><p>Topic - <%= @article.topic_name %></p></div>
-        <div class="row">
-            <form>    
-                <input type="hidden" id="article_ids" name="article_ids" value=<%= @topic_articles.join(',') %>>
-                <input type="hidden" id="article_id" name="article_id" value=<%= @article.id %>>    
-                <input id="next" type="submit"  value="Next Article in Topic" />         
-            </form>
-        </div>
         <div class="row">
             <form id="like">
                 Helpful Count:<span id="article_helpful_count"><%=@article.helpful_count%></span>
