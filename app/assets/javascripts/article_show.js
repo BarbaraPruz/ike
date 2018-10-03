@@ -25,6 +25,12 @@ function showArticle (article) {
     article.comments.forEach ( function (comment) {
         $("#comments_detail").append(buildComment(comment));
     });
+
+    // NOTE: this code will update the URL so it looks correct.  But
+    // it won't work 100% with back/forward browser buttons 
+    // (browser will update URL but not reload). 
+    // history.pushState({controller:"articles", id:`${article.id}` }, 
+    //     "ike", `/articles/${article.id}`);
 }
 
 $(function() {
