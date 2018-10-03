@@ -12,7 +12,6 @@
 //
 //= require jquery
 //= require rails-ujs
-//= require turbolinks
 //= require_tree .
 // tinymce is for rich text editing
 //= require tinymce

@@ -31,6 +31,7 @@ $(function() {
     console.log("Article Show - ready");
     $("#like").submit(function(e) {
         console.log("Like!",this);
+        debugger;
         e.preventDefault();
         let id = $("#article_id").val();
         var values = $(this).serialize();

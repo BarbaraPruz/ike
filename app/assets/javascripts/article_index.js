@@ -1,7 +1,7 @@
-//<script type="text/javascript" charset="utf-8">
 
 function createArticleTable (articles) {
-    console.log("Create Article Table");
+    console.log("Create Article Rows, count", articles.length);
+  
     $("#articles_table tbody").empty();
     articles.forEach ( function (article) {
         let html = `<tr>`;
@@ -24,4 +24,3 @@ $(function() {
     });
 });
 
-//</script
