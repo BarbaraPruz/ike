@@ -17,7 +17,11 @@ function createArticleTable (articles) {
 
 $(function() {
     console.log("Articles index - ready");
-    $.get("/articles/index_data", createArticleTable);
+    let currentPage = $("#current_page")
+    if ((currentPage.hasClass("articles")) && 
+        (currentPage.hasClass("index")) ) {
+        $.get("/articles/index_data", createArticleTable);
+    }
     $("#sort_button").on("click", function(e) {
         e.preventDefault();
         $.get("/articles/index_data", { sort: `${$("#sort").val()}` }, createArticleTable);          
