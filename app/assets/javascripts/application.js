@@ -24,3 +24,13 @@
 Handlebars.registerHelper('updated_at_time', function() {
     return moment(this.updated_at).format("YYYY-MM-DD HH:mm");
 });  
+
+Handlebars.registerHelper('concat', function() {
+    var outStr = '';
+    for(var arg in arguments){
+        if(typeof arguments[arg]!='object'){
+            outStr += arguments[arg];
+        }
+    }
+    return outStr;
+});

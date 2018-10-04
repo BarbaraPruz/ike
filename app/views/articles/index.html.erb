@@ -32,7 +32,7 @@
     {{#each this}}
         <tr>
             <th scope="row">{{topic.name}}</th>
-            <td><a href="/articles/{{article.id}}">{{title}}</a></td>
+            <td><a href={{concat "/articles/" id}}>{{title}}</a></td>
             <td>{{helpful_count}}</td>
             <td>{{updated_at_time}}</td>
         </tr>

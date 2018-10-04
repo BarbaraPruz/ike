@@ -1,12 +1,12 @@
 
-function buildComment (comment) {
-    let date = moment(`${comment.updated_at}`).format("YYYY-MM-DD HH:mm");
-    let html = `<div class="indent">`;
-    html += `<div class="mb-0">${comment.content}</div>`;
-    html += `<h5 class="mt-0">${comment.author_name} on ${date}</h5>`;
-    html += `</div>`;
-    return html;
-}
+// function buildComment (comment) {
+//     let date = moment(`${comment.updated_at}`).format("YYYY-MM-DD HH:mm");
+//     let html = `<div class="indent">`;
+//     html += `<div class="mb-0">${comment.content}</div>`;
+//     html += `<h5 class="mt-0">${comment.author_name} on ${date}</h5>`;
+//     html += `</div>`;
+//     return html;
+// }
 
 function showArticle (article) {
     console.log("Show Article!", article);
@@ -16,9 +16,16 @@ function showArticle (article) {
     $("#article_id").val(article.id);
 
     $("#comments_detail").empty();   
+    let template = Handlebars.compile(document.getElementById("comments-template").innerHTML);
     article.comments.forEach ( function (comment) {
-        $("#comments_detail").append(buildComment(comment));
+        let result = template(comment);
+        $("#comments_detail").innerHTML += result;
     });
+
+
+    // article.comments.forEach ( function (comment) {
+    //     $("#comments_detail").append(buildComment(comment));
+    // });
 
     // NOTE: this code will update the URL so"next" URL looks correct.  But
     // it won't work 100% with back/forward browser buttons 
@@ -75,9 +82,12 @@ function attachListeners() {
         var values = $(this).serialize();
         $.post("/articles/" + id + "/comments.json", values, function (comment) {
             console.log("Comment Response", comment); 
-            $("#comments_detail").append(buildComment(comment));     
-            $("#content").val(' '); // Comment form - content field            
-        });        
+            let template = Handlebars.compile(document.getElementById("comments-template").innerHTML);
+            let result = template(comment);
+            console.log("New comment html",result);
+            $("#comments_detail").append(result);
+            $("#content").val(' '); // Comment form - content field             
+        });                  
      });
 }
 

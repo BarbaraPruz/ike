@@ -59,7 +59,6 @@
             </div>
         <% end %>
     </div>
-
     <h3>Add Comment</h3>
     <form id="new_comment">
         <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
@@ -68,4 +67,12 @@
         <input type="submit"  value="Add Comment">  
     </form>   
 </div>
+
+<script id="comments-template" type="text/x-handlebars-template">
+    <div class="indent">
+        <div class="mb-0">{{content}}</div>
+        <h5 class="mt-0">{{author_name}} on {{updated_at_time}}</h5>
+    </div>
+</script>
+
 <%= javascript_include_tag('article_show.js') %>

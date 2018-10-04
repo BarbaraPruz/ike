@@ -4,7 +4,7 @@ function createArticleTable (articles) {
      
     let template = Handlebars.compile(document.getElementById("article-index-template").innerHTML);
     let result = template(articles);
-    $("#articles_table tbody").append(result);
+    $("#articles_table tbody")[0].innerHTML = result;
 }
 
 $(function() {
