@@ -1,32 +1,34 @@
+
 <div class="row outlined-section">
     <div class="col-sm-8">
         <h2 id="article_title"><%= @article.title %></h2>
-        <p>Topic - <%= @article.topic_name %></p>
-        <form>    
+        <form >    
             <input type="hidden" id="article_ids" name="article_ids" value=<%= @topic_articles.join(',') %>>
             <input type="hidden" id="article_id" name="article_id" value=<%= @article.id %>>    
-            <input id="next" type="submit"  class="btn btn-primary btn-sm" value="Next Article in Topic" />         
+            <input id="next" type="submit"  class="btn btn-primary btn-sm" value="Next Article in Topic: <%=@article.topic.name%>" />         
         </form>
     </div>
-    <div class="col-sm-2">
+    <div class="col-sm-4">
+        <div class="row">       
+            <form id="create_bookmark">
+                <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+                <input type="hidden" name="user_id" value="<%= @current_user.id %>">
+                <label>
+                    Bookmark 
+                    <input id="bookmark_title" name="bookmark_title" type="text" placeholder="bookmark name">
+                </label>            
+                <input type="submit" class="btn btn-primary btn-sm" value="Create">                         
+            </form>    
+        </div> 
         <div class="row">
             <form id="like">
-                Helpful Count:<span id="article_helpful_count"><%=@article.helpful_count%></span>
+                <label>Helpful Count:<span id="article_helpful_count"><%=@article.helpful_count%> </span><label>
                 <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-                <button type="submit" class="btn btn-outline-primary">
+                <button type="submit" class="btn btn-primary">
                     <i class="fas fa-thumbs-up" ></i>
                 </button>
             </form>
-        </div>         
-    </div>
-    <div class="col-sm-2">
-        <form id="create_bookmark">
-            <label>Bookmark</label>
-            <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-            <input type="hidden" name="user_id" value="<%= @current_user.id %>">
-            <input id="bookmark_title" name="bookmark_title" type="text">  
-            <input type="submit"  value="Create">                         
-        </form>            
+        </div>                
     </div>
 </div>
 <% if is_admin? %>
