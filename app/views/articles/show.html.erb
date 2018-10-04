@@ -64,7 +64,7 @@
     <form id="new_comment">
         <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
         <input type="hidden" name="user_id" value="<%= @current_user.id %>">        
-        <textarea name="content" id="content" rows="5" cols="70"></textarea>
+        <textarea name="content" id="content" rows="5" cols="100"></textarea><br/>
         <input type="submit"  value="Add Comment">  
     </form>   
 </div>

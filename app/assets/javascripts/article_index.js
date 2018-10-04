@@ -22,6 +22,7 @@ $(function() {
         (currentPage.hasClass("index")) ) {
         $.get("/articles/index_data", createArticleTable);
     }
+    
     $("#sort_button").on("click", function(e) {
         e.preventDefault();
         $.get("/articles/index_data", { sort: `${$("#sort").val()}` }, createArticleTable);          

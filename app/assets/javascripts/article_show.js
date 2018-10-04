@@ -1,10 +1,4 @@
 
-function addArticleIdtoFormValues (values) {
-    values+=`&article_id=${$("#article_id").text()}`
-    console.log ("updated values with", $("#article_id"));
-    return values;
-}
-
 function buildComment (comment) {
     let date = moment(`${comment.updated_at}`).format("YYYY-MM-DD HH:mm");
     let html = `<div class="indent">`;
@@ -26,15 +20,15 @@ function showArticle (article) {
         $("#comments_detail").append(buildComment(comment));
     });
 
-    // NOTE: this code will update the URL so it looks correct.  But
+    // NOTE: this code will update the URL so"next" URL looks correct.  But
     // it won't work 100% with back/forward browser buttons 
     // (browser will update URL but not reload). 
     // history.pushState({controller:"articles", id:`${article.id}` }, 
     //     "ike", `/articles/${article.id}`);
 }
 
-$(function() {
-    console.log("Article Show - ready");
+function attachListeners() {
+
     $("#like").submit(function(e) {
         console.log("Like!",this);
         e.preventDefault();
@@ -45,15 +39,12 @@ $(function() {
             $("#article_helpful_count").text(article.helpful_count);          
         }); 
     });
+
     $("#next").on("click", function(e) {
-        console.log("Next!");
-        console.log("id",$("#article_id").val());
+        console.log("Next! id",$("#article_id").val());
         e.preventDefault();
-        let id = $("#article_id").val();
-        let idstring = $("#article_ids").val();
-        let ids = idstring.split(',').map( id => parseInt(id,10) );
-        id = parseInt(id,10);
-        console.log("xids", ids, "max index", ids.length-1);
+        let id = parseInt ($("#article_id").val(), 10);
+        let ids = $("#article_ids").val().split(',').map( id => parseInt(id,10) );
         let idx = ids.indexOf(id);          
         if ( idx == (ids.length-1) ) { 
             alert("Last Article in Topic!");
@@ -64,18 +55,19 @@ $(function() {
             $.get("/articles/" + id + ".json", showArticle);
         }    
      });
+
      $("#create_bookmark").submit (function(e) {
         e.preventDefault();
         console.log("Create Bookmark!");
         let id = $("#article_id").val();
         var values = $(this).serialize();
-        console.log("Values",values);
         $.post("/articles/" + id + "/bookmarks.json", values, function (bookmark) {
             console.log("Bookmark Response", bookmark);
             alert(`Bookmark "${bookmark.bookmark_title}" Created!`);
             $("#bookmark_title").val('');        
         });        
      });
+
      $("#new_comment").submit (function(e) {
         e.preventDefault();
         console.log("New Comment!");
@@ -87,4 +79,10 @@ $(function() {
             $("#content").val(' '); // Comment form - content field            
         });        
      });
+}
+
+$(function() {
+    console.log("Article Show - ready");
+    attachListeners();
+
 });
