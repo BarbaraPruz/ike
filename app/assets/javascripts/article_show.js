@@ -1,15 +1,4 @@
-
-// function buildComment (comment) {
-//     let date = moment(`${comment.updated_at}`).format("YYYY-MM-DD HH:mm");
-//     let html = `<div class="indent">`;
-//     html += `<div class="mb-0">${comment.content}</div>`;
-//     html += `<h5 class="mt-0">${comment.author_name} on ${date}</h5>`;
-//     html += `</div>`;
-//     return html;
-// }
-
 function showArticle (article) {
-    console.log("Show Article!", article);
     $("#article_title").text(article.title);
     $("#article_helpful_count").text(article.helpful_count);
     $("#article_content").html(article.content);  
@@ -22,11 +11,6 @@ function showArticle (article) {
         $("#comments_detail").innerHTML += result;
     });
 
-
-    // article.comments.forEach ( function (comment) {
-    //     $("#comments_detail").append(buildComment(comment));
-    // });
-
     // NOTE: this code will update the URL so"next" URL looks correct.  But
     // it won't work 100% with back/forward browser buttons 
     // (browser will update URL but not reload). 
@@ -34,65 +18,58 @@ function showArticle (article) {
     //     "ike", `/articles/${article.id}`);
 }
 
-function attachListeners() {
+function likeHandler (e) {
+    let id = $("#article_id").val();
+    let values = $(this).serialize();
+    $.post("/articles/" + id + "/like", values, function (article) {
+        $("#article_helpful_count").text(article.helpful_count);          
+    }); 
+    e.preventDefault();    
+}
 
-    $("#like").submit(function(e) {
-        console.log("Like!",this);
-        e.preventDefault();
-        let id = $("#article_id").val();
-        var values = $(this).serialize();
-        $.post("/articles/" + id + "/like", values, function (article) {
-            console.log("Likes Response", article);
-            $("#article_helpful_count").text(article.helpful_count);          
-        }); 
+function nextHandler (e) {
+    let id = parseInt ($("#article_id").val(), 10);
+    let ids = $("#article_ids").val().split(',').map( id => parseInt(id,10) );
+    let idx = ids.indexOf(id);          
+    if ( idx == (ids.length-1) ) { 
+        alert("Last Article in Topic!");
+    }
+    else {
+        id = ids[++idx];
+        $.get("/articles/" + id + ".json", showArticle);
+    }
+    e.preventDefault();    
+}
+
+function createBookmarkHandler (e) {
+    let id = $("#article_id").val();
+    let values = $(this).serialize();
+    $.post("/articles/" + id + "/bookmarks.json", values, function (bookmark) {
+        alert(`Bookmark "${bookmark.bookmark_title}" Created!`);
+        $("#bookmark_title").val('');        
+    }); 
+    e.preventDefault();         
+}
+
+function newCommentHandler (e) {
+    let id = $("#article_id").val();
+    let values = $(this).serialize();
+    $.post("/articles/" + id + "/comments.json", values, function (comment) {
+        let template = Handlebars.compile(document.getElementById("comments-template").innerHTML);
+        let result = template(comment);
+        $("#comments_detail").append(result);
+        $("#content").val(' '); // Comment form - content field             
     });
-
-    $("#next").on("click", function(e) {
-        console.log("Next! id",$("#article_id").val());
-        e.preventDefault();
-        let id = parseInt ($("#article_id").val(), 10);
-        let ids = $("#article_ids").val().split(',').map( id => parseInt(id,10) );
-        let idx = ids.indexOf(id);          
-        if ( idx == (ids.length-1) ) { 
-            alert("Last Article in Topic!");
-        }
-        else {
-            id = ids[++idx];
-            console.log ("going to get",`"/articles/${id}"`);
-            $.get("/articles/" + id + ".json", showArticle);
-        }    
-     });
-
-     $("#create_bookmark").submit (function(e) {
-        e.preventDefault();
-        console.log("Create Bookmark!");
-        let id = $("#article_id").val();
-        var values = $(this).serialize();
-        $.post("/articles/" + id + "/bookmarks.json", values, function (bookmark) {
-            console.log("Bookmark Response", bookmark);
-            alert(`Bookmark "${bookmark.bookmark_title}" Created!`);
-            $("#bookmark_title").val('');        
-        });        
-     });
-
-     $("#new_comment").submit (function(e) {
-        e.preventDefault();
-        console.log("New Comment!");
-        let id = $("#article_id").val();
-        var values = $(this).serialize();
-        $.post("/articles/" + id + "/comments.json", values, function (comment) {
-            console.log("Comment Response", comment); 
-            let template = Handlebars.compile(document.getElementById("comments-template").innerHTML);
-            let result = template(comment);
-            console.log("New comment html",result);
-            $("#comments_detail").append(result);
-            $("#content").val(' '); // Comment form - content field             
-        });                  
-     });
+    e.preventDefault();      
 }
 
 $(function() {
-    console.log("Article Show - ready");
-    attachListeners();
+    //console.log("Article Show - ready");
+
+    // AttachListeners
+    $("#like").submit(likeHandler);
+    $("#next").click(nextHandler); 
+    $("#create_bookmark").submit (createBookmarkHandler);
+    $("#new_comment").submit (newCommentHandler);
 
 });

@@ -26,7 +26,7 @@ Handlebars.registerHelper('updated_at_time', function() {
 });  
 
 Handlebars.registerHelper('concat', function() {
-    var outStr = '';
+    let outStr = '';
     for(var arg in arguments){
         if(typeof arguments[arg]!='object'){
             outStr += arguments[arg];
