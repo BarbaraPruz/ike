@@ -18,3 +18,9 @@
 //= require tinymce
 // moment for js formatting of times
 //= require moment.min
+// handlebars templating
+//= require handlebars.js
+
+Handlebars.registerHelper('updated_at_time', function() {
+    return moment(this.updated_at).format("YYYY-MM-DD HH:mm");
+});  

@@ -28,4 +28,14 @@
     </tbody>
 </table>
 
+<script id="article-index-template" type="text/x-handlebars-template">
+    {{#each this}}
+        <tr>
+            <th scope="row">{{topic.name}}</th>
+            <td><a href="/articles/{{article.id}}">{{title}}</a></td>
+            <td>{{helpful_count}}</td>
+            <td>{{updated_at_time}}</td>
+        </tr>
+    {{/each}}
+</script>
 <%= javascript_include_tag('article_index.js') %>
