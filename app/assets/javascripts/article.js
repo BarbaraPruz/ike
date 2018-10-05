@@ -1,18 +1,19 @@
 // Article class used by article show next
 class Article {
-    constructor(title, id, likes, content) {
-      this.title = title;
-      this.id = id;
-      this.likes = likes;      
-      this.content = content;
+    constructor(article_json) {
+      this.title = article_json.title;
+      this.id = article_json.id;
+      this.likes = article_json.helpful_count;      
+      this.content = article_json.content;
       this.comments = [];
+      article_json.comments.forEach ( comment => this.comments.push(new Comment(comment)));
+    //       comment => this.comments.push({content: comment.content, 
+    //                                      author:comment.author_name, 
+    //                                      updated_at: comment.updated_at})
+    //   );
     }
-  
-    addComment (comment, author, date) {  
-      this.comments.push({content: comment, author:author, updated_at: date});
-    }
-  
-    show (article) {
+
+    show () {
         $("#article_title").text(this.title);
         $("#article_helpful_count").text(this.likes);
         $("#article_content").html(this.content);  
@@ -20,11 +21,7 @@ class Article {
     
         $("#comments_detail").empty();   
         let template = Handlebars.compile(document.getElementById("comments-template").innerHTML);
-        this.comments.forEach ( function (comment) {
-            let result = template(comment);
-            console.log("show comments",result);
-            $("#comments_detail").append(result);
-        });
+        this.comments.forEach ( comment => comment.show(template) );
     
         // NOTE: this code will update the URL so"next" URL looks correct.  But
         // it won't work 100% with back/forward browser buttons 
@@ -32,5 +29,5 @@ class Article {
         // history.pushState({controller:"articles", id:`${article.id}` }, 
         //     "ike", `/articles/${article.id}`);
     }
-    
+       
 };

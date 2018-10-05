@@ -17,11 +17,8 @@ function nextHandler (e) {
     }
     else {
         id = ids[++idx];
-        $.get("/articles/" + id + ".json", function (a) {
-            let article = new Article(a.title, a.id, a.helpful_count, a.content);
-            a.comments.forEach ( function (comment) {
-               article.addComment(comment.content, comment.author_name, comment.updated_at);
-            });
+        $.get("/articles/" + id + ".json", function (article_json) {
+            let article = new Article(article_json);
             article.show();
         });
     }
@@ -41,10 +38,10 @@ function createBookmarkHandler (e) {
 function newCommentHandler (e) {
     let id = $("#article_id").val();
     let values = $(this).serialize();
-    $.post("/articles/" + id + "/comments.json", values, function (comment) {
+    $.post("/articles/" + id + "/comments.json", values, function (comment_json) {
+        let comment = new Comment(comment_json);
         let template = Handlebars.compile(document.getElementById("comments-template").innerHTML);
-        let result = template(comment);
-        $("#comments_detail").append(result);
+        comment.show(template);
         $("#content").val(' '); // Comment form - content field             
     });
     e.preventDefault();      
