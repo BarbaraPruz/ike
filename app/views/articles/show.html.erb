@@ -22,7 +22,7 @@
         </div> 
         <div class="row">
             <form id="like">
-                <label>Helpful Count:<span id="article_helpful_count"><%=@article.helpful_count%> </span><label>
+                <label>Helpful Count:<span id="article_helpful_count"><%=@article.helpful_count%>&nbsp;</span><label>
                 <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
                 <button type="submit" class="btn btn-primary">
                     <i class="fas fa-thumbs-up" ></i>

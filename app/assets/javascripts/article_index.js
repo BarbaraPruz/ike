@@ -1,6 +1,5 @@
-
 function createArticleTable (articles) {
-    console.log("Create Article Rows, count", articles.length);
+    //console.log("Create Article Rows, count", articles.length);
      
     let template = Handlebars.compile(document.getElementById("article-index-template").innerHTML);
     let result = template(articles);
