@@ -28,8 +28,9 @@ function nextHandler (e) {
 function createBookmarkHandler (e) {
     let id = $("#article_id").val();
     let values = $(this).serialize();
-    $.post("/articles/" + id + "/bookmarks.json", values, function (bookmark) {
-        alert(`Bookmark "${bookmark.bookmark_title}" Created!`);
+    $.post("/articles/" + id + "/bookmarks.json", values, function (bookmark_json) {
+        let bookmark = new Bookmark(bookmark_json);
+        bookmark.notification();
         $("#bookmark_title").val('');        
     }); 
     e.preventDefault();         
