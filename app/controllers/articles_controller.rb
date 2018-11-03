@@ -1,3 +1,6 @@
+#require 'byebug'
+#require 'pry'
+
 class ArticlesController < ApplicationController
     before_action :require_logged_in
     before_action :require_admin, only: [:new, :create, :destroy, :edit, :update]
@@ -12,6 +15,9 @@ class ArticlesController < ApplicationController
     end
 
     def like
+    #    byebug if params[:id] == '4' # ex. enter byebug if id is 4
+    #    byebug  # always go to debugger here
+    #    binding.pry
         get_article
         @article.update(:helpful_count => @article.helpful_count+1) 
         redirect_to @article
