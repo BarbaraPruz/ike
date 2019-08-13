@@ -19,7 +19,7 @@ Rails.application.routes.draw do
         resources :comments, only: [:new, :create]
         resources :bookmarks, only: [:new, :create, :destroy]
     end    
-    post '/articles/:id/like' => 'articles#like'
+    post '/articles/:article_id/like' => 'likes#create', as: :like_article
 
     # miscellaneous
     get '/about' => 'static#about'
