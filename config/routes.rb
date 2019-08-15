@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
-
-  # Users and sessions 
+  # Users and sessions
   root 'application#welcome', as: :welcome
 
   get '/login' => 'application#welcome'

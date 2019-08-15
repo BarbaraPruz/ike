@@ -1,24 +1,24 @@
 class User < ActiveRecord::Base
-    has_secure_password
+  has_secure_password
 
-    has_many :bookmarks, dependent: :destroy
-    has_many :articles, through: :bookmarks
-    has_many :comments
-    has_many :likes, dependent: :destroy
-        
-    validates :name, presence: true
-    validates :email, presence: true, uniqueness: true
-    validates :password, presence: true, on: :create
+  has_many :bookmarks, dependent: :destroy
+  has_many :articles, through: :bookmarks
+  has_many :comments
+  has_many :likes, dependent: :destroy
 
-    before_save { |user| user.email = user.email.downcase }
+  validates :name, presence: true
+  validates :email, presence: true, uniqueness: true
+  validates :password, presence: true, on: :create
 
-    def self.find_or_create_by_omniauth(auth_hash)
-        email = auth_hash[:info][:email]
-        user = find_by(:email => email)
-        if !user 
-            user=User.create(:email => email, :password => SecureRandom.hex,
-                :name => auth_hash[:info][:name])
-        end
-        user
+  before_save { |user| user.email = user.email.downcase }
+
+  def self.find_or_create_by_omniauth(auth_hash)
+    email = auth_hash[:info][:email]
+    user = find_by(:email => email)
+    if !user
+      user = User.create(:email => email, :password => SecureRandom.hex,
+                         :name => auth_hash[:info][:name])
     end
+    user
+  end
 end

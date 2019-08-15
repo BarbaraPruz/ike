@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
     redirect_to user_path(@current_user.id) if logged_in?
     @user = User.new
   end
-  
+
   def logged_in?
     session[:user_id]
   end
@@ -17,6 +17,7 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
   def require_logged_in
     redirect_to welcome_path unless logged_in?
   end

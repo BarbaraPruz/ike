@@ -1,35 +1,36 @@
-class Article  < ActiveRecord::Base
-    belongs_to :topic
-    has_many :bookmarks, dependent: :destroy
-    has_many :users, through: :bookmarks
-    has_many :comments
-    has_many :likes, dependent: :destroy
-        
-    validates :title, presence: true
-    validates :topic, presence: true
-    
-    def self.sort_by (sort_column)
-        order = ["helpful_count", "updated_at"].include?(sort_column) ? :desc : :asc
-        if sort_column == "topic"
-            Article.joins(:topic).merge(Topic.order(name: order))
-        else
-            Article.order("#{sort_column} #{order}")
-        end
-    end
+class Article < ActiveRecord::Base
+  belongs_to :topic
+  has_many :bookmarks, dependent: :destroy
+  has_many :users, through: :bookmarks
+  has_many :comments
+  has_many :likes, dependent: :destroy
 
-    def topic_name
-        self.topic ? self.topic.name : nil
-    end
+  validates :title, presence: true
+  validates :topic, presence: true
 
-    def new_topic=(data)
-        if !data.empty?
-            self.topic = Topic.find_or_create_by(:name => data)
-        end
+  def self.sort_by(sort_column)
+    order = ["helpful_count", "updated_at"].include?(sort_column) ? :desc : :asc
+    if sort_column == "topic"
+      Article.joins(:topic).merge(Topic.order(name: order))
+    else
+      Article.order("#{sort_column} #{order}")
     end
-    def new_topic
-    end
+  end
 
-    def self.get_latest (number_articles)
-        self.last(number_articles).sort { |x,y| y.created_at <=> x.created_at }
+  def topic_name
+    self.topic ? self.topic.name : nil
+  end
+
+  def new_topic=(data)
+    if !data.empty?
+      self.topic = Topic.find_or_create_by(:name => data)
     end
+  end
+
+  def new_topic
+  end
+
+  def self.get_latest(number_articles)
+    self.last(number_articles).sort { |x, y| y.created_at <=> x.created_at }
+  end
 end
