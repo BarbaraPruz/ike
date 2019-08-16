@@ -7,10 +7,10 @@ class Bookmark < ActiveRecord::Base
   belongs_to :user
 
   def article_title
-    Article.find(self.article_id).title
+    Article.find(article_id).title
   end
 
   def topic_id
-    Article.find(self.article_id).topic_id
+    Article.find(article_id).topic_id
   end
 end

@@ -1,6 +1,8 @@
+# ApplicationController - just what it says.  Handles root route and provides
+# helper methods.
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
-  helper_method :logged_in?, :is_admin?
+  helper_method :logged_in?, :admin?
   before_action :current_user
 
   def welcome
@@ -12,7 +14,7 @@ class ApplicationController < ActionController::Base
     session[:user_id]
   end
 
-  def is_admin?
+  def admin?
     current_user && @current_user.admin
   end
 
@@ -23,7 +25,7 @@ class ApplicationController < ActionController::Base
   end
 
   def require_admin
-    redirect_to user_path(@current_user) if !is_admin?
+    redirect_to user_path(@current_user) unless admin?
   end
 
   def current_user

@@ -4,6 +4,6 @@ class Topic < ActiveRecord::Base
   validates :name, presence: true, uniqueness: true
 
   def article_ids
-    self.articles.all.map { |article| article.id }
+    articles.all.map(&:id)
   end
 end

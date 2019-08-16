@@ -5,13 +5,14 @@ Rails.application.routes.draw do
   get '/login' => 'application#welcome'
   post '/login' => 'sessions#create'
   delete '/logout' => 'sessions#destroy'
-  get "/auth/:provider/callback" => 'sessions#create'
+  get '/auth/:provider/callback' => 'sessions#create'
 
   resources :users
 
-  resources :topics, only: [:index, :edit, :show, :update, :destroy]
   get '/topics/admin' => 'topics#admin'
-  get '/topics/:id/articles/:article_id' => 'topics#topic_articles', as: :topic_articles
+  resources :topics, only: [:index, :edit, :show, :update, :destroy]
+  get '/topics/:id/articles/:article_id' => 'topics#topic_articles',
+      as: :topic_articles
 
   # article and comments and bookmarks
   resources :articles do

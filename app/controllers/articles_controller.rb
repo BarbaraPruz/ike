@@ -1,12 +1,10 @@
-# require 'byebug'
-# require 'pry'
-
+# ArticlesController - handles RESTful routes for Articles model
 class ArticlesController < ApplicationController
   before_action :require_logged_in
   before_action :require_admin, only: [:new, :create, :destroy, :edit, :update]
 
   def index
-    @sort_field = params[:sort] ? params[:sort] : "topic"
+    @sort_field = params[:sort] || 'topic'
     @articles = Article.sort_by(@sort_field)
   end
 
@@ -14,17 +12,8 @@ class ArticlesController < ApplicationController
     @article = Article.find(params[:id])
   end
 
-  def like
-    #    byebug if params[:id] == '4' # ex. enter byebug if id is 4
-    #    byebug  # always go to debugger here
-    #    binding.pry
-    get_article
-    @article.update(:helpful_count => @article.helpful_count + 1)
-    redirect_to @article
-  end
-
   def new
-    @article = Article.new()
+    @article = Article.new
     @topics = Topic.all
   end
 
@@ -68,8 +57,9 @@ class ArticlesController < ApplicationController
 
   def get_article
     @article = Article.find(params[:id])
-    if !@article
-      redirect_to user_path(@current_user), :alert => "Article not found. Article Id #{params[:id]}"
-    end
+    return if @article
+
+    redirect_to user_path(@current_user),
+                alert: "Article not found. Article Id #{params[:id]}"
   end
 end

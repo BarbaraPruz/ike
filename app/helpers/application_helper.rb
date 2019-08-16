@@ -1,22 +1,20 @@
 module ApplicationHelper
   def home_path
-    if logged_in?
-      return user_path(session[:user_id])
-    else
-      return welcome_path
-    end
+    return user_path(session[:user_id]) if logged_in?
+    
+    welcome_path
   end
 
   def format_time(time)
-    time.strftime ("%d %b. %Y %H:%M")
+    time.strftime('%d %b. %Y %H:%M')
   end
 
   def show_error_messages(ar_object)
-    html = "<div id='error_explanation'><p>oops, there seem to be some problems:</p><ul>"
+    html = '<div id="error_explanation"><p>oops, there seem to be some problems:</p><ul>'
     ar_object.errors.full_messages.each do |message|
-      html += "<li>#{message}</li>"
+      html += "li>#{message}</li>"
     end
-    html += "<ul></div>"
+    html += '<ul></div>'
     html.html_safe
   end
 
@@ -25,7 +23,7 @@ module ApplicationHelper
     fields = [{ value: '', display: 'Choose Sort Field' },
               { value: 'topic', display: 'Topic' },
               { value: 'title', display: 'Title' },
-              { value: 'helpful_count', display: 'Likes' },
+              { value: 'likes', display: 'Likes' },
               { value: 'updated_at', display: 'Latest Update' }]
 
     html = "<select name='sort' id='sort'>"
@@ -37,6 +35,6 @@ module ApplicationHelper
   end
 
   def sort_selected_option(field, sort_field)
-    field == sort_field ? "selected='selected'" : ""
+    field == sort_field ? "selected='selected'" : ''
   end
 end

@@ -16,7 +16,7 @@ class UsersController < ApplicationController
     if !@user.update(user_params)
       render :edit
     else
-      @user.update(:admin => (params[:user][:admin] == "1" ? true : false))
+      @user.update(admin: (params[:user][:admin] == '1' ? true : false))
       redirect_to user_update_return_path
     end
   end
@@ -43,7 +43,7 @@ class UsersController < ApplicationController
 
   def destroy
     if params[:id] == @current_user[:id]
-      redirect_to users_path, :alert => "Sorry - you cannot delete yourself!"
+      redirect_to users_path, :alert => 'Sorry - you cannot delete yourself!'
     else
       get_user_instance_var
       @user.destroy
@@ -54,23 +54,24 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation)
+    params.require(:user).permit(:name, :email, :password,
+                                 :password_confirmation)
   end
 
   def user_update_return_path
-    is_admin? ? users_path : user_path(current_user)
+    admin? ? users_path : user_path(current_user)
   end
 
   def require_admin_or_same_user
-    if !is_admin? && current_user.id.to_s != params[:id]
-      redirect_to user_path(@current_user.id), :alert => "Operation not allowed"
+    if !admin? && current_user.id.to_s != params[:id]
+      redirect_to user_path(@current_user.id), alert: 'Operation not allowed'
     end
   end
 
   def get_user_instance_var
     @user = User.find(params[:id])
-    if !@user
-      redirect_to user_update_return_path, :alert => "User not found."
+    unless @user
+      redirect_to user_update_return_path, alert: 'User not found.'
     end
   end
 end
