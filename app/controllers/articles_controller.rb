@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # ArticlesController - handles RESTful routes for Articles model
 class ArticlesController < ApplicationController
   before_action :require_logged_in
@@ -28,12 +30,12 @@ class ArticlesController < ApplicationController
   end
 
   def edit
-    get_article
+    find_article
     @topics = Topic.all
   end
 
   def update
-    get_article
+    find_article
     @article.update(article_params)
     if @article.valid?
       redirect_to @article
@@ -44,7 +46,7 @@ class ArticlesController < ApplicationController
   end
 
   def destroy
-    get_article
+    find_article
     @article.destroy
     redirect_to articles_path
   end
@@ -55,7 +57,7 @@ class ArticlesController < ApplicationController
     params.require(:article).permit(:title, :content, :topic_id, :new_topic)
   end
 
-  def get_article
+  def find_article
     @article = Article.find(params[:id])
     return if @article
 

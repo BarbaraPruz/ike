@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # ApplicationController - just what it says.  Handles root route and provides
 # helper methods.
 class ApplicationController < ActionController::Base

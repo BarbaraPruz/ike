@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class UsersController < ApplicationController
   before_action :require_logged_in, except: [:new, :create]
   before_action :require_admin, only: [:index, :destroy]

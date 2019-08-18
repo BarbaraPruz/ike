@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Comment < ActiveRecord::Base
   validates :content, presence: true
   validates :article_id, presence: true

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Article < ActiveRecord::Base
   belongs_to :topic
   has_many :bookmarks, dependent: :destroy

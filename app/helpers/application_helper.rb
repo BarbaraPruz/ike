@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ApplicationHelper
   def home_path
     return user_path(session[:user_id]) if logged_in?

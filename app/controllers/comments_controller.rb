@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # CommentsController - free speech! comments can just be created
 class CommentsController < ApplicationController
   before_action :require_logged_in

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # TopicsController - controller for Topics model
 class TopicsController < ApplicationController
   before_action :require_logged_in
