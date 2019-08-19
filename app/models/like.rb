@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Like model joins a user to an article
 class Like < ActiveRecord::Base
   belongs_to :article
   belongs_to :user

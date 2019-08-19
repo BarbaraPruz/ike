@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Bookmark model lets user bookmark articles
 class Bookmark < ActiveRecord::Base
   validates :title, presence: true
   validates :article_id, presence: true

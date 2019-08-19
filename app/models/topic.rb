@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Topic model - topics organize articles
 class Topic < ActiveRecord::Base
   has_many :articles
 

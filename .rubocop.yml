@@ -8,6 +8,7 @@ AllCops:
     - 'config/spring.rb'
     - 'config/puma.rb'
     - 'config/initializers/**/*'
+    - 'config/environments/**/*'
     - 'bin/**/*'
 
 Style/SymbolArray:
@@ -16,3 +17,7 @@ Style/SymbolArray:
 
 Style/EmptyMethod:
   EnforcedStyle: expanded
+
+Style/WordArray:
+  Enabled: true
+  EnforcedStyle: brackets

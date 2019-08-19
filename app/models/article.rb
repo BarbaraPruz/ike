@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Article model - what the knowledgebase is all about!
 class Article < ActiveRecord::Base
   belongs_to :topic
   has_many :bookmarks, dependent: :destroy
