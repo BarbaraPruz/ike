@@ -4,6 +4,7 @@
 class TopicsController < ApplicationController
   before_action :require_logged_in
   before_action :require_admin, only: [:admin_index, :edit, :update, :destroy]
+  before_action :fetch_topic, except: [:index, :admin]
 
   def index
     @topics = Topic.all
@@ -14,11 +15,9 @@ class TopicsController < ApplicationController
   end
 
   def edit
-    @topic = Topic.find_by(id: params[:id])
   end
 
   def update
-    @topic = Topic.find_by(id: params[:id])
     if !@topic
       flash[:alert] = 'Error. Topic not found.'
     else
@@ -32,7 +31,6 @@ class TopicsController < ApplicationController
   end
 
   def destroy
-    topic = Topic.find_by(id: params[:id])
     article = Article.find_by(topic_id: params[:id]) if topic
     if topic && !article
       topic.destroy
@@ -43,7 +41,6 @@ class TopicsController < ApplicationController
   end
 
   def show
-    @topic = Topic.find_by(id: params[:id])
     article_ids = @topic.article_ids
     @article = Article.find(article_ids[0])
     render :topic_articles
@@ -52,16 +49,13 @@ class TopicsController < ApplicationController
   def topic_articles
     # to do: not efficient but will fix this with jquery later!
     # to do: move any real logic to model
-    @topic = Topic.find_by(id: params[:id])
     article_ids = @topic.article_ids
     last_index = params[:article_id].to_i
     new_index = article_ids.find_index do |id|
       id == last_index
     end
     new_index += 1
-    if (new_index.negative?) || (new_index == article_ids.length)
-      new_index = 0
-    end
+    new_index = 0 if new_index.negative? || new_index == article_ids.length
     @article = Article.find_by(id: article_ids[new_index])
     # to do: fix url, currently showing last article id
     # to do: share common template with articles show but with other buttons
@@ -72,5 +66,9 @@ class TopicsController < ApplicationController
 
   def topic_params
     params.require(:topic).permit(:name)
+  end
+
+  def fetch_topic
+    @topic = Topic.find_by(id: params[:id])
   end
 end

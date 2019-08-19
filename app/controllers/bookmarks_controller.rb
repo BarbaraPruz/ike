@@ -14,17 +14,16 @@ class BookmarksController < ApplicationController
   end
 
   def create
-    bookmark_user_id = params[:bookmark][:user_id]
-    if @article && bookmark_user_id.to_i == current_user.id
-      @bookmark = Bookmark.create(bookmark_params)
-      if @bookmark.valid?
-        redirect_to @article
-      else
-        render :new
-      end
-    else
+    if new_bookmark_params_valid?
       redirect_to user_path(@current_user.id),
                   alert: 'Article or User not found'
+      return
+    end
+    @bookmark = Bookmark.create(bookmark_params)
+    if @bookmark.valid?
+      redirect_to @article
+    else
+      render :new
     end
   end
 
@@ -46,5 +45,9 @@ class BookmarksController < ApplicationController
 
   def fetch_article
     @article = Article.find_by(id: params[:article_id])
+  end
+
+  def new_bookmark_params_valid?
+    @article && current_user.id == params[:bookmark][:user_id]
   end
 end
