@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Controller for users model (CRUD actions)
 class UsersController < ApplicationController
   before_action :require_logged_in, except: [:new, :create]
   before_action :require_admin, only: [:index, :destroy]
@@ -10,15 +11,15 @@ class UsersController < ApplicationController
   end
 
   def edit
-    get_user_instance_var
+    fetch_user_instance_var
   end
 
   def update
-    get_user_instance_var
+    fetch_user_instance_var
     if !@user.update(user_params)
       render :edit
     else
-      @user.update(admin: (params[:user][:admin] == '1' ? true : false))
+      @user.update(admin: (params[:user][:admin] == '1'))
       redirect_to user_update_return_path
     end
   end
@@ -45,9 +46,9 @@ class UsersController < ApplicationController
 
   def destroy
     if params[:id] == @current_user[:id]
-      redirect_to users_path, :alert => 'Sorry - you cannot delete yourself!'
+      redirect_to users_path, alert: 'Sorry - you cannot delete yourself!'
     else
-      get_user_instance_var
+      fetch_user_instance_var
       @user.destroy
       redirect_to users_path
     end
@@ -65,15 +66,13 @@ class UsersController < ApplicationController
   end
 
   def require_admin_or_same_user
-    if !admin? && current_user.id.to_s != params[:id]
-      redirect_to user_path(@current_user.id), alert: 'Operation not allowed'
-    end
+    return unless !admin? && current_user.id.to_s != params[:id]
+
+    redirect_to user_path(@current_user.id), alert: 'Operation not allowed'
   end
 
-  def get_user_instance_var
+  def fetch_user_instance_var
     @user = User.find(params[:id])
-    unless @user
-      redirect_to user_update_return_path, alert: 'User not found.'
-    end
+    redirect_to user_update_return_path, alert: 'User not found.' unless @user
   end
 end
