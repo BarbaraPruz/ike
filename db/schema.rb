@@ -12,12 +12,15 @@
 
 ActiveRecord::Schema.define(version: 2019_08_13_042545) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "articles", force: :cascade do |t|
     t.string "title"
     t.text "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "topic_id"
+    t.bigint "topic_id"
     t.index ["topic_id"], name: "index_articles_on_topic_id"
   end
 
@@ -38,8 +41,8 @@ ActiveRecord::Schema.define(version: 2019_08_13_042545) do
   end
 
   create_table "likes", force: :cascade do |t|
-    t.integer "article_id"
-    t.integer "user_id"
+    t.bigint "article_id"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["article_id"], name: "index_likes_on_article_id"
@@ -63,4 +66,7 @@ ActiveRecord::Schema.define(version: 2019_08_13_042545) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "articles", "topics"
+  add_foreign_key "likes", "articles"
+  add_foreign_key "likes", "users"
 end
