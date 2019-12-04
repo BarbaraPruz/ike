@@ -1,7 +1,7 @@
 # ike
 ike is a general knowledgebase web app built using Rails.
 
-Anyone can login through Google or by signing up for ike.  The sign up uses email for login and a and password (secure).  The user "name" is used for informational purposes.  Administration privileges can only be granted by another administrator.
+Anyone can login through GitHub or by signing up for ike.  The sign up uses email for login and a and password (secure).  The user "name" is used for informational purposes.  Administration privileges can only be granted by another administrator.
 
 Once logged in, all users can 
 - browse articles and topics (including sorting by topic, title, likes or last update date)
